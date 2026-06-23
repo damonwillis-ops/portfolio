@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Damon Willis, CPP | Enterprise Physical Security Advisor | NW Arkansas</title>
-  <meta name="description" content="Enterprise physical security advisor with 14 years experience. CPP certified. PSIM full-lifecycle ownership. Led Fortune 1 security program transformation." />
+  <meta name="description" content="Enterprise physical security leader with 17 years experience. CPP certified. PSIM full-lifecycle ownership. Led Fortune 1 security program transformation." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -16,15 +16,15 @@
       --bg2: #111520;
       --bg3: #181d2a;
       --border: #1e2535;
-      --accent: #3b82f6;
+      --accent: #2563eb;
       --accent2: #1d4ed8;
+      --accent-glow: rgba(37,99,235,0.12);
       --text: #e2e8f0;
       --muted: #64748b;
       --subtle: #94a3b8;
     }
 
     html { scroll-behavior: smooth; }
-
     .mono { font-family: 'JetBrains Mono', monospace; }
 
     body {
@@ -35,7 +35,35 @@
       font-size: 16px;
     }
 
-    /* NAV */
+    /* ── DOT GRID ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, #1e2535 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav, section, hr, footer, .section-alt { position: relative; z-index: 1; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -49,22 +77,9 @@
       align-items: center;
       justify-content: space-between;
     }
-
-    nav .logo {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--text);
-      letter-spacing: 0.02em;
-    }
-
+    nav .logo { font-weight: 600; font-size: 0.95rem; color: var(--text); letter-spacing: 0.02em; }
     nav .logo span { color: var(--accent); }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
-
+    nav ul { list-style: none; display: flex; gap: 2rem; }
     nav ul a {
       color: var(--subtle);
       text-decoration: none;
@@ -72,13 +87,20 @@
       font-weight: 500;
       transition: color 0.2s;
     }
-
     nav ul a:hover { color: var(--text); }
 
-    /* SECTIONS */
+    /* ── SECTIONS ── */
     section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
 
-    /* HERO */
+    /* alternate section backgrounds for rhythm */
+    .section-alt {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .section-alt section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
+
+    /* ── HERO ── */
     #hero {
       min-height: 100vh;
       display: flex;
@@ -91,47 +113,30 @@
       padding-right: 2rem;
       position: relative;
     }
-
     .hero-inner {
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 3rem;
-      align-items: center;
+      align-items: start;
+      padding-top: 1rem;
     }
-
     .hero-photo {
-      width: 200px;
-      height: 200px;
+      width: 270px;
+      height: 270px;
       border-radius: 50%;
       object-fit: cover;
       object-position: center top;
-      border: 2px solid var(--border);
-      box-shadow: 0 0 0 6px rgba(59,130,246,0.08);
+      border: 3px solid var(--border);
+      box-shadow: 0 0 0 6px var(--accent-glow), 0 0 60px rgba(37,99,235,0.15);
       flex-shrink: 0;
+      margin-top: 2.5rem;
     }
-
-    @media (max-width: 700px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-photo { width: 120px; height: 120px; margin-bottom: 1.5rem; order: -1; }
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: radial-gradient(circle, #1e2535 1px, transparent 1px);
-      background-size: 32px 32px;
-      opacity: 0.45;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    nav, section, hr, footer { position: relative; z-index: 1; }
 
     .eyebrow {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 1.25rem;
@@ -139,45 +144,38 @@
 
     h1 {
       font-size: clamp(2.2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
       margin-bottom: 1.5rem;
     }
-
     h1 span { color: var(--accent); }
 
     .hero-sub {
-      font-size: 1.125rem;
+      font-size: 1.1rem;
       color: var(--subtle);
       max-width: 620px;
       line-height: 1.7;
       margin-bottom: 2.5rem;
     }
-
     .hero-badges {
       display: flex;
       gap: 0.75rem;
       flex-wrap: wrap;
       margin-bottom: 2.5rem;
     }
-
     .badge {
       background: var(--bg3);
       border: 1px solid var(--border);
       border-radius: 6px;
       padding: 0.35rem 0.85rem;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 500;
       color: var(--subtle);
+      transition: border-color 0.2s;
     }
-
-    .cta-row {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
+    .badge:hover { border-color: var(--accent); }
+    .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
     .btn-primary {
       background: var(--accent);
       color: #fff;
@@ -186,11 +184,10 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 0.9rem;
-      transition: background 0.2s;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px var(--accent-glow);
     }
-
-    .btn-primary:hover { background: var(--accent2); }
-
+    .btn-primary:hover { background: var(--accent2); box-shadow: 0 0 30px rgba(37,99,235,0.2); }
     .btn-ghost {
       border: 1px solid var(--border);
       color: var(--subtle);
@@ -201,33 +198,27 @@
       font-size: 0.9rem;
       transition: border-color 0.2s, color 0.2s;
     }
-
     .btn-ghost:hover { border-color: var(--subtle); color: var(--text); }
 
-    /* DIVIDER */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 0 2rem;
-    }
+    /* ── DIVIDER ── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0 2rem; }
 
-    /* SECTION HEADERS */
+    /* ── SECTION HEADERS ── */
     h2 {
       font-size: 1.75rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+      font-weight: 800;
+      letter-spacing: -0.025em;
       margin-bottom: 0.5rem;
     }
-
     .section-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 0.75rem;
     }
-
     .section-intro {
       color: var(--subtle);
       font-size: 1rem;
@@ -236,19 +227,19 @@
       line-height: 1.7;
     }
 
-    /* CARDS */
+    /* ── CARDS ── */
     .cards { display: grid; gap: 1.25rem; }
-
     .card {
       background: var(--bg2);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.75rem;
-      transition: border-color 0.2s;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
-
-    .card:hover { border-color: #2d3a55; }
-
+    .card:hover {
+      border-color: rgba(37,99,235,0.3);
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
     .card-header {
       display: flex;
       align-items: flex-start;
@@ -256,46 +247,55 @@
       gap: 1rem;
       margin-bottom: 0.75rem;
     }
-
-    .card-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-
+    .card-title { font-size: 1.05rem; font-weight: 600; color: var(--text); }
     .card-tag {
-      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--accent);
-      background: rgba(59,130,246,0.1);
-      border: 1px solid rgba(59,130,246,0.2);
+      background: var(--accent-glow);
+      border: 1px solid rgba(37,99,235,0.2);
       padding: 0.2rem 0.6rem;
       border-radius: 4px;
       white-space: nowrap;
     }
-
     .card-tag.green {
       color: #34d399;
       background: rgba(52,211,153,0.08);
       border-color: rgba(52,211,153,0.2);
     }
-
     .card-tag.amber {
       color: #fbbf24;
       background: rgba(251,191,36,0.08);
       border-color: rgba(251,191,36,0.2);
     }
-
     .card p {
       color: var(--subtle);
       font-size: 0.9rem;
       line-height: 1.7;
       margin-bottom: 1rem;
     }
-
     .card p:last-child { margin-bottom: 0; }
+
+    /* ── SYSTEM OUTPUT BLOCK ── */
+    .sys-output {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      line-height: 1.6;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      color: var(--subtle);
+      margin: 1rem 0;
+      overflow-x: auto;
+    }
+    .sys-output .hl { color: var(--accent); }
+    .sys-output .ok { color: #34d399; }
+    .sys-output .warn { color: #fbbf24; }
+    .sys-output .dim { color: var(--muted); }
 
     .outcome {
       display: flex;
@@ -305,7 +305,6 @@
       color: var(--subtle);
       margin-top: 0.5rem;
     }
-
     .outcome::before {
       content: "→";
       color: var(--accent);
@@ -314,35 +313,35 @@
       margin-top: 0.05rem;
     }
 
-    /* CREDENTIALS */
+    /* ── CREDENTIALS ── */
     .cred-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
     }
-
     .cred-card {
       background: var(--bg2);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 1.5rem;
+      padding: 1.75rem;
+      transition: border-color 0.3s;
     }
-
+    .cred-card:hover { border-color: rgba(37,99,235,0.25); }
     .cred-number {
-      font-size: 2rem;
-      font-weight: 700;
+      font-size: 2.5rem;
+      font-weight: 800;
       color: var(--accent);
       line-height: 1;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
     }
-
     .cred-label {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--subtle);
+      line-height: 1.5;
     }
 
-
-    /* CONTACT */
+    /* ── CONTACT ── */
     .contact-form {
       background: var(--bg2);
       border: 1px solid var(--border);
@@ -350,11 +349,7 @@
       padding: 2rem;
       max-width: 540px;
     }
-
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-
+    .form-group { margin-bottom: 1.25rem; }
     label {
       display: block;
       font-size: 0.8rem;
@@ -363,7 +358,6 @@
       margin-bottom: 0.4rem;
       letter-spacing: 0.04em;
     }
-
     input, textarea {
       width: 100%;
       background: var(--bg3);
@@ -376,12 +370,10 @@
       outline: none;
       transition: border-color 0.2s;
     }
-
     input:focus, textarea:focus { border-color: var(--accent); }
-
     textarea { min-height: 120px; resize: vertical; }
 
-    /* FOOTER */
+    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
       padding: 2rem;
@@ -389,13 +381,17 @@
       color: var(--muted);
       font-size: 0.8rem;
     }
-
     footer a { color: var(--subtle); text-decoration: none; }
     footer a:hover { color: var(--text); }
 
+    @media (max-width: 700px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-photo { width: 140px; height: 140px; margin-bottom: 1.5rem; margin-top: 0; order: -1; }
+    }
     @media (max-width: 640px) {
       nav ul { display: none; }
       h1 { font-size: 2rem; }
+      .cred-number { font-size: 2rem; }
     }
   </style>
 </head>
@@ -416,18 +412,18 @@
 <section id="hero">
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="eyebrow">Enterprise Security Leader · Innovator · CPP</div>
-      <h1>I build what enterprise<br />security programs <span>don't know they're missing.</span></h1>
-      <p class="hero-sub">
+      <div class="eyebrow reveal">Enterprise Security Leader · Innovator · CPP</div>
+      <h1 class="reveal">I build what enterprise<br />security programs <span>don't know they're missing.</span></h1>
+      <p class="hero-sub reveal">
         17 years in enterprise physical security — from hospitality VIP protection to Fortune 1
         scale. CPP certified. Coast Guard veteran.
       </p>
-      <p class="hero-sub" style="margin-top:-1rem;">
+      <p class="hero-sub reveal" style="margin-top:-1rem;">
         At Walmart, I led the shift to a data-first, AI-ready model for enterprise physical security —
         raising the standard for how the industry designs, deploys, and manages security infrastructure
         at scale across 4,600 locations and 450,000 device records annually.
       </p>
-      <div class="hero-badges">
+      <div class="hero-badges reveal">
         <span class="badge">CPP Certified</span>
         <span class="badge">U.S. Coast Guard Veteran</span>
         <span class="badge">PSIM Full-Lifecycle</span>
@@ -435,12 +431,12 @@
         <span class="badge">AI/CV Deployment</span>
         <span class="badge">NW Arkansas · Remote</span>
       </div>
-      <div class="cta-row">
+      <div class="cta-row reveal">
         <a href="#work" class="btn-primary">See the Work</a>
         <a href="#contact" class="btn-ghost">Get in Touch</a>
       </div>
     </div>
-    <img src="headshot.jpg" alt="Damon Willis, CPP — Enterprise Security Leader" class="hero-photo" />
+    <img src="headshot.jpg" alt="Damon Willis, CPP — Enterprise Security Leader" class="hero-photo reveal" />
   </div>
 </section>
 
@@ -448,9 +444,9 @@
 
 <!-- BACKGROUND -->
 <section id="background">
-  <div class="section-label">Background</div>
-  <h2>17 years. Fortune 500 to Fortune 1.</h2>
-  <p class="section-intro" style="max-width:720px;">
+  <div class="section-label reveal">Background</div>
+  <h2 class="reveal">17 years. Fortune 500 to Fortune 1.</h2>
+  <p class="section-intro reveal" style="max-width:720px;">
     Started in hospitality security — Assistant Director of Security at the Peabody Hotel Little Rock,
     managing executive protection, VIP and diplomatic guest operations, and incident response,
     including operations alongside U.S. Secret Service details.
@@ -459,25 +455,46 @@
     HIPAA, and SOC 2. Large-scale physical security deployment leadership at J.B. Hunt across
     North American commercial facilities.
   </p>
-  <p class="section-intro" style="max-width:720px; margin-bottom:0;">
+  <p class="section-intro reveal" style="max-width:720px; margin-bottom:0;">
     Now leading global security strategy and innovation at Walmart — driving a modern, data-first
     approach to enterprise physical security design and delivery at Fortune 1 scale.
     CPP certified. Coast Guard veteran.
   </p>
 </section>
 
-<!-- WORK -->
+<!-- THESIS -->
+<section id="thesis">
+  <div class="section-label reveal">Point of View</div>
+  <h2 class="reveal" style="max-width:700px;">Enterprise security programs are sitting on a data asset they can't access.</h2>
+  <p class="section-intro reveal" style="max-width:700px; font-size:1.05rem; line-height:1.8; margin-top:1.5rem;">
+    The gap isn't in the devices — it's in the infrastructure between the device and the decision.
+    Most programs have thousands of cameras, panels, and sensors deployed across hundreds of locations
+    with no structured, queryable record of what exists, where, or whether it's healthy.
+    Leadership makes capital and risk decisions on incomplete data because the data layer was never built.
+  </p>
+  <p class="section-intro reveal" style="max-width:700px; font-size:1.05rem; line-height:1.8; margin-bottom:0;">
+    I build that infrastructure. At Walmart, I proved it works at Fortune 1 scale. The systems
+    below are the result.
+  </p>
+</section>
+
+<hr class="divider" />
+
+<!-- WORK (alt background for rhythm) -->
+<div class="section-alt">
 <section id="work">
-  <div class="section-label">Systems Built</div>
-  <h2>What I've built.</h2>
-  <p class="section-intro">
+  <div class="section-label reveal">Systems Built</div>
+  <h2 class="reveal">What I've built.</h2>
+  <p class="section-intro reveal">
     Not proof-of-concept tools. Each one runs against real program data
-    at enterprise scale, with real operational stakes.
+    at enterprise scale, with real operational stakes. I lead a team of 3 internal staff and
+    7 embedded team members, managing multiple integrator relationships — and I built the
+    systems they operate on. Enterprise strategy packages authored and delivered at SVP level.
   </p>
 
   <div class="cards">
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-header">
         <div class="card-title"><span class="mono">APERTURE</span> — AI Camera Design Assurance</div>
         <span class="card-tag">Production</span>
@@ -489,13 +506,19 @@
         precision, enriches placements with canonical store-space ground truth, and produces
         requirement-traceable design reviews that gate installation.
       </p>
+      <div class="sys-output">
+        <span class="dim">review:</span> <span class="hl">STR-2847</span> · Walmart #4219<br/>
+        <span class="dim">cameras:</span> 48 placed · <span class="ok">46 passed</span><br/>
+        <span class="dim">findings:</span> <span class="warn">2</span> · FOV obstruction (×2)<br/>
+        <span class="dim">status:</span> <span class="warn">● blocked</span> · re-review required
+      </div>
       <div class="outcome">Defects become findings before they become field problems — at 4,600-location scale.</div>
       <div class="outcome">Device data entry automated across hundreds of thousands of records.</div>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-header">
-        <div class="card-title"><span class="mono">FATHOM</span> — 20-Agent Intelligence Orchestration Engine</div>
+        <div class="card-title"><span class="mono">FATHOM</span> — 20-Agent Intelligence Engine</div>
         <span class="card-tag">Production</span>
       </div>
       <p>
@@ -503,29 +526,39 @@
         FATHOM is a 20-agent orchestration system that keeps program data continuously current,
         risk-scored, and ready without manual intervention. Agents run independently on strict
         latency SLOs; results surface through a dual-view dashboard covering executive and operator needs.
-        Built on FastAPI + React + SQLite.
       </p>
+      <div class="sys-output">
+        <span class="dim">agents:</span> <span class="ok">18 healthy</span> · <span class="warn">2 degraded</span><br/>
+        <span class="dim">last refresh:</span> 4m ago · <span class="dim">SLO:</span> <span class="ok">≤15m ✓</span><br/>
+        <span class="dim">locations scored:</span> <span class="hl">4,612</span><br/>
+        <span class="dim">risk tier:</span> high <span class="warn">23</span> · medium 418 · low 4,171
+      </div>
       <div class="outcome">Leadership gets a live operational picture — continuously current, no manual refresh cycle.</div>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-header">
-        <div class="card-title"><span class="mono">HORIZON</span> — 6-Layer Program Decision System</div>
+        <div class="card-title"><span class="mono">HORIZON</span> — 6-Layer Decision System</div>
         <span class="card-tag">Production</span>
       </div>
       <p>
         Enterprise security programs lack a consistent, traceable way to answer leadership questions
         about program health and risk posture. HORIZON is a six-layer decision system built to close
         that gap — moving from raw data through canonical keys, semantic views, versioned metrics,
-        and agent I/O to deliver answers under strict response time standards. Every answer carries
-        a single trace ID.
+        and agent I/O to deliver answers under strict response time standards.
       </p>
+      <div class="sys-output">
+        <span class="dim">query:</span> "remodel completion rate Q2 south region"<br/>
+        <span class="dim">trace:</span> <span class="hl">hz-9f3a2c</span><br/>
+        <span class="dim">layers:</span> raw → canonical → semantic → metric → agent → answer<br/>
+        <span class="dim">result:</span> <span class="ok">87.3%</span> · <span class="dim">latency:</span> 1.2s · <span class="ok">SLO ✓</span>
+      </div>
       <div class="outcome">Single source of truth for program KPIs with full lineage and SLO enforcement.</div>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-header">
-        <div class="card-title">PSIM Full-Lifecycle Ownership — <span class="mono">Genetec Security Center</span></div>
+        <div class="card-title">PSIM Full-Lifecycle — <span class="mono">Genetec Security Center</span></div>
         <span class="card-tag green">Foundational</span>
       </div>
       <p>
@@ -539,56 +572,72 @@
 
   </div>
 </section>
-
-<hr class="divider" />
+</div>
 
 <!-- CREDENTIALS -->
 <section id="credentials">
-  <div class="section-label">Scale & Credentials</div>
-  <h2>The numbers behind the work.</h2>
+  <div class="section-label reveal">Scale &amp; Credentials</div>
+  <h2 class="reveal">The numbers behind the work.</h2>
   <br />
   <div class="cred-grid">
-    <div class="cred-card">
+    <div class="cred-card reveal">
       <div class="cred-number">4,600+</div>
-      <div class="cred-label">Retail locations in security program scope at Walmart</div>
+      <div class="cred-label">Retail locations in enterprise security program scope</div>
     </div>
-    <div class="cred-card">
+    <div class="cred-card reveal">
       <div class="cred-number">450K+</div>
       <div class="cred-label">Physical security device records managed annually</div>
     </div>
-    <div class="cred-card">
-      <div class="cred-number">14+</div>
-      <div class="cred-label">Years progressive enterprise physical security roles</div>
+    <div class="cred-card reveal">
+      <div class="cred-number">17+</div>
+      <div class="cred-label">Years progressive enterprise security leadership</div>
     </div>
-    <div class="cred-card">
+    <div class="cred-card reveal">
+      <div class="cred-number">~70%</div>
+      <div class="cred-label">Reduction in exposure windows after driving enterprise platform adoption</div>
+    </div>
+    <div class="cred-card reveal">
+      <div class="cred-number">10+</div>
+      <div class="cred-label">Direct and embedded team members led, plus multi-integrator oversight</div>
+    </div>
+    <div class="cred-card reveal">
       <div class="cred-number">CPP</div>
       <div class="cred-label">ASIS Certified Protection Professional — gold standard credential</div>
     </div>
-    <div class="cred-card">
+    <div class="cred-card reveal">
       <div class="cred-number">PSIM</div>
-      <div class="cred-label">Full-lifecycle ownership: Genetec evaluation → deployment → operations</div>
+      <div class="cred-label">Full-lifecycle ownership: evaluation → deployment → operations</div>
     </div>
-    <div class="cred-card">
+    <div class="cred-card reveal">
       <div class="cred-number">PCI L1</div>
-      <div class="cred-label">PCI DSS Level 1 compliance authority, NIST 800-53, SOC 1 & 2</div>
+      <div class="cred-label">PCI DSS Level 1 compliance authority, NIST 800-53, SOC 1 &amp; 2</div>
+    </div>
+    <div class="cred-card reveal">
+      <div class="cred-number">CapEx</div>
+      <div class="cred-label">Multi-million dollar enterprise security program and vendor accountability</div>
+    </div>
+    <div class="cred-card reveal">
+      <div class="cred-number">Crisis</div>
+      <div class="cred-label">Incident command across Fortune 500 telecom, hospitality, and diplomatic operations</div>
     </div>
   </div>
 </section>
 
 <hr class="divider" />
 
-<!-- VENTURES -->
+<!-- VENTURES (alt background) -->
+<div class="section-alt">
 <section id="ventures">
-  <div class="section-label">What I'm Building</div>
-  <h2>Active ventures.</h2>
-  <p class="section-intro">
+  <div class="section-label reveal">What I'm Building</div>
+  <h2 class="reveal">Active ventures.</h2>
+  <p class="section-intro reveal">
     The same thinking that drives the enterprise work drives these. Security data should be
     structured, queryable, and intelligent. These are bets on that future.
   </p>
 
   <div class="cards">
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-header">
         <div class="card-title"><span class="mono">SAIP</span> — Security Asset Intelligence Platform</div>
         <span class="card-tag amber">In Development</span>
@@ -599,11 +648,16 @@
         data lake. 4-level asset hierarchy (Org → Site → Floor → Device), floorplan canvas,
         GPS mapping, and multi-format export. Where designs end, SAIP begins.
       </p>
+      <div class="sys-output">
+        <span class="dim">query:</span> "cameras at Commerce with firmware older than 2024"<br/>
+        <span class="dim">result:</span> <span class="hl">17 devices</span> · 3 floors · <span class="warn">4 critical</span><br/>
+        <span class="dim">action:</span> open on map · export CSV · create ticket
+      </div>
       <p style="font-size:0.82rem; color:var(--muted);">Stack: FastAPI · React · PostgreSQL/PostGIS · pgvector</p>
       <div class="outcome">Pilot customer target: Q4 2026.</div>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-header">
         <div class="card-title">Groundtruth — Physical Security Intelligence</div>
         <span class="card-tag green">Live</span>
@@ -618,23 +672,22 @@
 
   </div>
 </section>
-
-<hr class="divider" />
+</div>
 
 <!-- CONTACT -->
 <section id="contact">
-  <div class="section-label">Get in Touch</div>
-  <h2>Let's talk.</h2>
-  <p class="section-intro">
+  <div class="section-label reveal">Get in Touch</div>
+  <h2 class="reveal">Let's talk.</h2>
+  <p class="section-intro reveal">
     Roles, SAIP pilot interest, Groundtruth, or just connecting with someone who
     thinks about enterprise security the same way you do. I respond within 24 hours.
   </p>
-  <p class="section-intro" style="margin-top:-1.5rem; font-size:0.85rem;">
+  <p class="section-intro reveal" style="margin-top:-1.5rem; font-size:0.85rem;">
     I also take on select advisory engagements for enterprise security programs navigating
     AI readiness, PSIM modernization, or security data strategy. Reach out with details.
   </p>
 
-  <div class="contact-form">
+  <div class="contact-form reveal">
     <form action="mailto:damonwillis@icloud.com" method="post" enctype="text/plain">
       <div class="form-group">
         <label for="name">Name</label>
@@ -646,7 +699,7 @@
       </div>
       <div class="form-group">
         <label for="subject">What's this about?</label>
-        <input type="text" id="subject" name="subject" placeholder="Advisory / SAIP pilot / Groundtruth / Other" />
+        <input type="text" id="subject" name="subject" placeholder="Roles / SAIP pilot / Groundtruth / Other" />
       </div>
       <div class="form-group">
         <label for="message">Message</label>
@@ -658,7 +711,7 @@
     </form>
     <p style="margin-top:1rem; font-size:0.8rem; color: var(--muted); text-align:center;">
       Or reach me directly: <a href="mailto:damonwillis@icloud.com" style="color:var(--subtle);">damonwillis@icloud.com</a>
-      · <a href="https://linkedin.com/in/damonwillis" target="_blank" style="color:var(--subtle);">LinkedIn</a>
+      · <a href="https://linkedin.com/in/damon-willis" target="_blank" style="color:var(--subtle);">LinkedIn</a>
     </p>
   </div>
 </section>
@@ -667,10 +720,20 @@
 <footer>
   <p>Damon Willis, CPP · Bella Vista, AR · <a href="mailto:damonwillis@icloud.com">damonwillis@icloud.com</a></p>
   <p style="margin-top:0.5rem;">
-    <a href="https://linkedin.com/in/damonwillis" target="_blank">LinkedIn</a> ·
+    <a href="https://linkedin.com/in/damon-willis" target="_blank">LinkedIn</a> ·
     <a href="https://groundtruth-ghost-io.ghost.io" target="_blank">Groundtruth</a>
   </p>
 </footer>
+
+<script>
+  // Scroll reveal — same pattern as SAIP site
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
 
 </body>
 </html>
