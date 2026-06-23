@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Damon Willis, CPP — Enterprise Physical Security Advisor</title>
-  <meta name="description" content="Enterprise physical security advisor. CPP. Built AI-driven security operations at Walmart's 4,600-location scale. Now advising and building." />
+  <title>Damon Willis, CPP | Enterprise Physical Security Advisor | NW Arkansas</title>
+  <meta name="description" content="Enterprise physical security advisor with 14 years experience. CPP certified. PSIM full-lifecycle ownership. Led Fortune 1 security program transformation." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -23,6 +24,8 @@
     }
 
     html { scroll-behavior: smooth; }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
 
     body {
       font-family: 'Inter', system-ui, sans-serif;
@@ -86,7 +89,21 @@
       margin: 0 auto;
       padding-left: 2rem;
       padding-right: 2rem;
+      position: relative;
     }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, #1e2535 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav, section, hr, footer { position: relative; z-index: 1; }
 
     .eyebrow {
       font-size: 0.8rem;
@@ -420,16 +437,17 @@
   <div class="eyebrow">Enterprise Physical Security Advisor</div>
   <h1>I build the systems<br />security programs <span>can't see without.</span></h1>
   <p class="hero-sub">
-    CPP-certified security leader with 14 years of progressive enterprise experience.
-    At Walmart I inherited a manual analog program and rebuilt it as AI-ready infrastructure —
-    4,600 locations, 450,000+ device records, systems now running at Fortune 1 scale.
-    I advise enterprise security programs doing the same.
+    Enterprise physical security advisor. CPP certified. 14 years progressive experience.
+  </p>
+  <p class="hero-sub" style="margin-top:-1rem;">
+    Led the transformation of Walmart's manual security design program into AI-ready infrastructure —
+    4,600 locations, 450,000 device records annually, built from the ground up.
   </p>
   <div class="hero-badges">
     <span class="badge">CPP Certified</span>
     <span class="badge">U.S. Coast Guard Veteran</span>
     <span class="badge">PSIM Full-Lifecycle</span>
-    <span class="badge">Genetec · Lenel · SiteOwl</span>
+    <span class="badge">Genetec · Lenel · Axis · Avigilon</span>
     <span class="badge">AI/CV Deployment</span>
     <span class="badge">NW Arkansas · Remote</span>
   </div>
@@ -440,6 +458,24 @@
 </section>
 
 <hr class="divider" />
+
+<!-- BACKGROUND -->
+<section id="background">
+  <div class="section-label">Background</div>
+  <h2>17 years. Fortune 500 to Fortune 1.</h2>
+  <p class="section-intro" style="max-width:720px;">
+    Started in hospitality security — Assistant Director of Security at the Peabody Hotel Little Rock,
+    managing executive protection, VIP and diplomatic guest operations, and incident response in a
+    high-visibility environment, including operations alongside U.S. Secret Service details.
+    Moved into enterprise security operations at Windstream, built a 24/7 SOC from scratch, owned
+    PSIM full-lifecycle, then crossed into compliance: PCI DSS Level 1, NIST 800-53, HIPAA, SOC 2.
+    Large-scale deployment leadership at J.B. Hunt across North American commercial facilities.
+    Now leading global security strategy and innovation at Walmart.
+  </p>
+  <p class="section-intro" style="max-width:720px; margin-bottom:0;">
+    CPP certified. Coast Guard veteran. The work below was built on that arc.
+  </p>
+</section>
 
 <!-- WORK -->
 <section id="work">
@@ -454,51 +490,51 @@
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title">APERTURE — AI Camera Design Assurance</div>
+        <div class="card-title"><span class="mono">APERTURE</span> — AI Camera Design Assurance</div>
         <span class="card-tag">Production</span>
       </div>
       <p>
-        Enterprise physical security programs spend millions installing cameras that fail in the field —
-        wrong angles, coverage gaps, AI-CV model mismatches. APERTURE moves defect detection upstream.
-        It ingests Axis Site Designer exports (WGS84 geocoordinate precision), enriches camera placements
-        with canonical store-space ground truth (departments, fixtures, thermal zones), and validates
-        every placement against codified AI-CV deployment requirements before a truck ever rolls.
+        Camera placement defects were discovered after installation — truck rolls, rework, and cost.
+        APERTURE validates every placement against computer vision deployment requirements before installation.
+        It ingests Axis Site Designer exports with WGS84 geocoordinate precision, enriches placements
+        with canonical store-space ground truth, and gates install sign-off with requirement-traceable design reviews.
       </p>
-      <div class="outcome">Automated design review gating install sign-off across thousands of store locations.</div>
-      <div class="outcome">Eliminated manual data entry across hundreds of thousands of device records.</div>
+      <div class="outcome">Defects become findings before they become field problems — at 4,600-location scale.</div>
+      <div class="outcome">Manual device data entry eliminated across hundreds of thousands of records.</div>
     </div>
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title">FATHOM — 20-Agent Intelligence Orchestration Engine</div>
+        <div class="card-title"><span class="mono">FATHOM</span> — 20-Agent Intelligence Orchestration Engine</div>
         <span class="card-tag">Production</span>
       </div>
       <p>
-        CCTV program data across thousands of locations goes stale fast. FATHOM is a 20-agent
-        orchestration system that keeps program data fresh, risk-scored, and insight-ready.
-        Agents run independently on strict latency SLOs; results surface through a dual-view
-        dashboard (executive summary + operator depth). Built on FastAPI + React + SQLite.
+        Program decisions relied on stale, scattered data with no single source of truth.
+        FATHOM is a 20-agent orchestration system that keeps enterprise security program data
+        continuously current, risk-scored, and ready. Agents run independently on strict latency SLOs;
+        results surface through a dual-view dashboard covering both executive and operator needs.
+        Built on FastAPI + React + SQLite.
       </p>
-      <div class="outcome">Program leadership gets a live operational cockpit instead of weekly manual reports.</div>
+      <div class="outcome">Leadership gets a live operational picture instead of weekly manual reports.</div>
     </div>
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title">HORIZON — 6-Layer Program Decision System</div>
+        <div class="card-title"><span class="mono">HORIZON</span> — 6-Layer Program Decision System</div>
         <span class="card-tag">Production</span>
       </div>
       <p>
-        Physical security programs make decisions on bad data. HORIZON is a layered decision system
-        built on top of the program's QuickBase data, moving from raw append-only mirror through
-        canonical keys, semantic views, versioned metrics, and agent I/O — to produce traceable,
-        definition-locked answers to business questions that previously required four analysts and a week.
+        Leadership questions required manual data pulls — slow, inconsistent, and impossible to trace.
+        HORIZON answers enterprise security program questions with traceable, consistent data under
+        strict response time standards. Built in six layers from raw data through canonical keys,
+        semantic views, versioned metrics, and agent I/O. Every answer carries a single trace ID.
       </p>
-      <div class="outcome">Single source of truth for CCTV program KPIs with full lineage and SLO enforcement.</div>
+      <div class="outcome">Single source of truth for program KPIs with full lineage and SLO enforcement.</div>
     </div>
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title">PSIM Full-Lifecycle Ownership — Genetec Security Center</div>
+        <div class="card-title">PSIM Full-Lifecycle Ownership — <span class="mono">Genetec Security Center</span></div>
         <span class="card-tag green">Foundational</span>
       </div>
       <p>
@@ -553,30 +589,31 @@
 <!-- ADVISORY -->
 <section id="advisory">
   <div class="section-label">Advisory Services</div>
-  <h2>Two Q3 advisory slots open.</h2>
+  <h2>Physical Security AI Readiness Assessment</h2>
   <p class="section-intro">
-    I work with enterprise physical security programs navigating AI-CV deployment,
-    PSIM modernization, and SiteOwl limitations at scale. Engagements are fixed-scope,
-    remote, and designed to deliver a decision-ready roadmap in 3 weeks.
+    Most enterprise security programs are data-dark. Devices are untracked, designs are siloed,
+    and the infrastructure for analytics or AI integration does not exist.
+    I built the system that corrected this at Fortune 1 scale — and I can tell you exactly
+    where your program stands and what it would take to close the gap.
   </p>
 
   <div class="advisory-box">
-    <h3>Physical Security AI Readiness Assessment</h3>
+    <h3>3-week fixed scope. Delivered remotely.</h3>
     <p>
-      A structured 3-week engagement that audits your current PSIM/VMS/CCTV stack,
-      scores AI-CV readiness by location tier, maps vendor options against your actual
-      operational constraints, and delivers a prioritized modernization roadmap with
-      executive presentation. Built on the same framework I used to transform Walmart's
-      program from manual analog to AI-ready at 4,600-location scale.
+      A structured engagement that audits your current physical security stack,
+      scores AI and computer vision readiness by location tier, and delivers a
+      prioritized modernization roadmap backed by an executive presentation.
+      Built on the same framework used to transform Walmart's program from
+      manual analog to AI-ready infrastructure at 4,600-location scale.
     </p>
     <ul class="service-list">
-      <li>Current stack audit — PSIM, VMS, access control, data architecture</li>
-      <li>AI-CV readiness scoring by location tier</li>
-      <li>Vendor recommendation matrix (Genetec, Lenel, Milestone, Axis, SiteOwl alternatives)</li>
-      <li>Prioritized modernization roadmap with implementation sequencing</li>
-      <li>Executive presentation ready for board or VP-level review</li>
+      <li>Stack audit covering PSIM, VMS, access control, and data architecture</li>
+      <li>AI and computer vision readiness scoring by location tier</li>
+      <li>Vendor capability matrix across major platforms</li>
+      <li>Prioritized modernization roadmap with sequenced recommendations</li>
+      <li>Executive presentation ready for Director and C-suite delivery</li>
     </ul>
-    <a href="#contact" class="btn-primary">Inquire About Q3 Availability</a>
+    <a href="#contact" class="btn-primary">Contact to Discuss Availability</a>
   </div>
 
 </section>
@@ -595,31 +632,17 @@
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Bluwood Order Management — Live SaaS</div>
-        <span class="card-tag green">Live · In Use</span>
-      </div>
-      <p>
-        Custom order management SaaS built for Bluwood, a NW Arkansas custom door manufacturer.
-        Full production lifecycle tracking: quote → in production → ready → delivered.
-        Customer management, order history, and communications log. Built on Next.js + Supabase,
-        deployed to production, actively used by the business today.
-      </p>
-      <div class="outcome">Replaced manual tracking with a purpose-built SaaS — live and running.</div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">SAIP — Security Asset Intelligence Platform</div>
+        <div class="card-title"><span class="mono">SAIP</span> — Security Asset Intelligence Platform</div>
         <span class="card-tag amber">In Development</span>
       </div>
       <p>
-        Enterprise SaaS replacing SiteOwl for large-enterprise physical security programs.
-        4-level asset hierarchy (Org → Site → Floor → Device), floorplan canvas, GPS mapping,
-        AI query layer, and multi-format export. Built on FastAPI + React + PostgreSQL/PostGIS + pgvector.
-        Founded on direct experience managing SiteOwl at 4,600 Walmart locations —
-        I know exactly where it breaks.
+        Physical security asset intelligence beyond the design phase — continuous device health,
+        enriched metadata, lifecycle tracking, and a natural-language query layer over a structured
+        data lake. 4-level asset hierarchy (Org → Site → Floor → Device), floorplan canvas,
+        GPS mapping, and multi-format export. Where designs end, SAIP begins.
       </p>
-      <div class="outcome">First pilot customer target: Q4 2026.</div>
+      <p style="font-size:0.82rem; color:var(--muted);">Stack: FastAPI · React · PostgreSQL/PostGIS · pgvector</p>
+      <div class="outcome">Pilot customer target: Q4 2026.</div>
     </div>
 
     <div class="card">
@@ -629,9 +652,8 @@
       </div>
       <p>
         Weekly intelligence digest for enterprise CSOs and security directors.
-        Practitioner analyst takes on threat environment, technology, incidents,
+        Practitioner analysis on threat environment, technology, incidents,
         and compliance — written from inside the enterprise, not from a vendor's PR team.
-        Fully automated: AI-powered sourcing, synthesis, and distribution pipeline.
       </p>
       <div class="outcome"><a href="https://groundtruth-ghost-io.ghost.io" target="_blank" style="color: var(--accent); text-decoration: none;">Subscribe →</a></div>
     </div>
