@@ -85,11 +85,34 @@
       flex-direction: column;
       justify-content: center;
       padding-top: 80px;
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
       padding-left: 2rem;
       padding-right: 2rem;
       position: relative;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 2px solid var(--border);
+      box-shadow: 0 0 0 6px rgba(59,130,246,0.08);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 700px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-photo { width: 120px; height: 120px; margin-bottom: 1.5rem; order: -1; }
     }
 
     body::before {
@@ -391,28 +414,33 @@
 
 <!-- HERO -->
 <section id="hero">
-  <div class="eyebrow">Enterprise Security Leader · Innovator · CPP</div>
-  <h1>I build the systems<br />security programs <span>can't see without.</span></h1>
-  <p class="hero-sub">
-    17 years in enterprise physical security — from hospitality VIP protection to Fortune 1
-    scale. CPP certified. Coast Guard veteran.
-  </p>
-  <p class="hero-sub" style="margin-top:-1rem;">
-    At Walmart, I led the shift to a data-first, AI-ready model for enterprise physical security —
-    raising the standard for how the industry designs, deploys, and manages security infrastructure
-    at scale across 4,600 locations and 450,000 device records annually.
-  </p>
-  <div class="hero-badges">
-    <span class="badge">CPP Certified</span>
-    <span class="badge">U.S. Coast Guard Veteran</span>
-    <span class="badge">PSIM Full-Lifecycle</span>
-    <span class="badge">Genetec · Lenel · Axis · Avigilon</span>
-    <span class="badge">AI/CV Deployment</span>
-    <span class="badge">NW Arkansas · Remote</span>
-  </div>
-  <div class="cta-row">
-    <a href="#work" class="btn-primary">See the Work</a>
-    <a href="#contact" class="btn-ghost">Get in Touch</a>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="eyebrow">Enterprise Security Leader · Innovator · CPP</div>
+      <h1>I build what enterprise<br />security programs <span>don't know they're missing.</span></h1>
+      <p class="hero-sub">
+        17 years in enterprise physical security — from hospitality VIP protection to Fortune 1
+        scale. CPP certified. Coast Guard veteran.
+      </p>
+      <p class="hero-sub" style="margin-top:-1rem;">
+        At Walmart, I led the shift to a data-first, AI-ready model for enterprise physical security —
+        raising the standard for how the industry designs, deploys, and manages security infrastructure
+        at scale across 4,600 locations and 450,000 device records annually.
+      </p>
+      <div class="hero-badges">
+        <span class="badge">CPP Certified</span>
+        <span class="badge">U.S. Coast Guard Veteran</span>
+        <span class="badge">PSIM Full-Lifecycle</span>
+        <span class="badge">Genetec · Lenel · Axis · Avigilon</span>
+        <span class="badge">AI/CV Deployment</span>
+        <span class="badge">NW Arkansas · Remote</span>
+      </div>
+      <div class="cta-row">
+        <a href="#work" class="btn-primary">See the Work</a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+    <img src="headshot.jpg" alt="Damon Willis, CPP — Enterprise Security Leader" class="hero-photo" />
   </div>
 </section>
 
