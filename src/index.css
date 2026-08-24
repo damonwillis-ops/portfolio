@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@import "@fontsource-variable/fraunces/full.css";
+@import "@fontsource-variable/fraunces/full-italic.css";
+@import "@fontsource/public-sans/400.css";
+@import "@fontsource/public-sans/500.css";
+@import "@fontsource/public-sans/600.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
+@theme {
+  --color-bg: #0c0d0f;
+  --color-bg-raised: #17191d;
+  --color-text: #ece6da;
+  --color-text-dim: #8d9096;
+  --color-accent: #c1893c;
+  --color-accent-dim: #5e4726;
+  --color-border: #26282e;
+
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-body: "Public Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent-dim);
+  color: var(--color-text);
+}
+
+@media print {
+  body {
+    background: #fff;
+    color: #111;
+  }
+
+  a {
+    color: #111 !important;
+    text-decoration: underline;
+  }
+
+  .text-accent {
+    color: #7a5623 !important;
+  }
+
+  .text-text-dim {
+    color: #444 !important;
+  }
+
+  .border-border,
+  .border-b,
+  .border-t,
+  .border-r {
+    border-color: #ccc !important;
+  }
+
+  .bg-bg\/90,
+  .backdrop-blur-sm {
+    position: static !important;
+    background: #fff !important;
+    backdrop-filter: none !important;
+  }
+
+  section {
+    break-inside: avoid;
+    padding-top: 1.2rem !important;
+    padding-bottom: 1.2rem !important;
+  }
+}
+
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    animation: rise 0.7s ease forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      animation: none;
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth accordion height via grid-template-rows, collapses to 0fr / expands to 1fr. */
+.accordion-rows {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.accordion-rows.is-open {
+  grid-template-rows: 1fr;
+}
+
+.accordion-rows > div {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-rows {
+    transition: none;
+  }
+}
+
+@media print {
+  .accordion-rows {
+    grid-template-rows: 1fr !important;
+  }
+}
