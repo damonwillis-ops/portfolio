@@ -6,28 +6,41 @@ export function Hero() {
       id="top"
       className="mx-auto max-w-6xl px-6 pt-16 pb-12 sm:px-8 sm:pt-24 sm:pb-16"
     >
-      <p className="reveal mb-6 font-mono text-[0.78rem] tracking-[0.16em] text-accent uppercase">
-        {hero.eyebrow}
-      </p>
+      <div className="mb-12 flex flex-col-reverse items-start gap-9 sm:flex-row sm:items-start sm:justify-between sm:gap-12">
+        <div className="min-w-0 flex-1">
+          <p className="reveal mb-6 font-mono text-[0.78rem] tracking-[0.16em] text-accent uppercase">
+            {hero.eyebrow}
+          </p>
 
-      <h1
-        className="reveal mb-7 max-w-[15ch] font-display text-[clamp(2.4rem,5.6vw,4.6rem)] leading-[1.05] tracking-[-0.01em] text-text"
-        style={{ animationDelay: "0.1s" }}
-      >
-        {hero.headline[0]}
-        <br />
-        {hero.headline[1]}
-        <em className="font-normal text-accent italic">
-          {hero.headlineEmphasis}
-        </em>
-      </h1>
+          <h1
+            className="reveal mb-7 max-w-[15ch] font-display text-[clamp(2.4rem,5.6vw,4.6rem)] leading-[1.05] tracking-[-0.01em] text-text"
+            style={{ animationDelay: "0.1s" }}
+          >
+            {hero.headline[0]}
+            <br />
+            {hero.headline[1]}
+            <em className="font-normal text-accent italic">
+              {hero.headlineEmphasis}
+            </em>
+          </h1>
 
-      <p
-        className="reveal mb-12 max-w-[56ch] text-[clamp(1.05rem,1.6vw,1.22rem)] leading-relaxed text-text-dim"
-        style={{ animationDelay: "0.2s" }}
-      >
-        {hero.sub}
-      </p>
+          <p
+            className="reveal max-w-[56ch] text-[clamp(1.05rem,1.6vw,1.22rem)] leading-relaxed text-text-dim"
+            style={{ animationDelay: "0.2s" }}
+          >
+            {hero.sub}
+          </p>
+        </div>
+
+        <img
+          src="/headshot.jpg"
+          alt="Damon Willis, CPP"
+          width={448}
+          height={448}
+          className="reveal h-36 w-36 shrink-0 border border-border object-cover grayscale-[15%] sm:h-44 sm:w-44 sm:translate-y-1 lg:h-52 lg:w-52"
+          style={{ animationDelay: "0.16s" }}
+        />
+      </div>
 
       <div
         className="reveal flex flex-wrap border-t border-b border-border"

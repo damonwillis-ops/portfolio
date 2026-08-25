@@ -33,12 +33,6 @@ export function Contact() {
             </a>
           </div>
         </div>
-
-        <img
-          src="/headshot.jpg"
-          alt="Damon Willis, CPP"
-          className="h-28 w-28 shrink-0 rounded-full border border-border object-cover grayscale-[15%] sm:h-32 sm:w-32"
-        />
       </div>
     </section>
   )
