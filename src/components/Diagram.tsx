@@ -165,7 +165,7 @@ export function DataFoundationDiagram() {
   return (
     <Frame
       width={720}
-      caption="Nothing survived past sign-off before. Everything above the line was built on what the capture program created."
+      caption="Nothing survived past sign-off before. Everything below the line was built on what the capture program created."
     >
       <text x={0} y={14} fill={DIM} style={{ font: `10px ${MONO}`, letterSpacing: "0.1em" }}>
         BEFORE
