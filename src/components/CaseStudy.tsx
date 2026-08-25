@@ -1,4 +1,5 @@
 import type { CaseStudy as CaseStudyData } from "../content/caseStudies"
+import { DataFoundationDiagram, EvalLoopDiagram } from "./Diagram"
 
 interface Props {
   study: CaseStudyData
@@ -53,10 +54,14 @@ export function CaseStudy({ study, expanded, onToggle }: Props) {
 
       <div className={`accordion-rows ${expanded ? "is-open" : ""}`}>
         <div>
-          <div id={detailId} className="max-w-[68ch] space-y-4 pt-6 text-text-dim">
-            <p className="leading-relaxed">{study.detail.problem}</p>
-            <p className="leading-relaxed">{study.detail.solution}</p>
-            <p className="leading-relaxed">{study.detail.outcome}</p>
+          <div id={detailId} className="pt-6 text-text-dim">
+            <div className="max-w-[68ch] space-y-4">
+              <p className="leading-relaxed">{study.detail.problem}</p>
+              <p className="leading-relaxed">{study.detail.solution}</p>
+            </div>
+            {study.diagram === "eval-loop" && <EvalLoopDiagram />}
+            {study.diagram === "data-foundation" && <DataFoundationDiagram />}
+            <p className="mt-4 max-w-[68ch] leading-relaxed">{study.detail.outcome}</p>
           </div>
         </div>
       </div>

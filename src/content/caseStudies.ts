@@ -13,6 +13,8 @@ export interface CaseStudy {
   id: string
   tag: string
   title: string
+  /** Optional schematic rendered inside the expanded detail. See Diagram.tsx. */
+  diagram?: "eval-loop" | "data-foundation"
   summary: {
     problem: string
     outcome: string
@@ -45,27 +47,9 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
-    id: "building-the-soc",
-    tag: "The Operator",
-    title: "A 24/7 SOC built from nothing, held through a vendor failure",
-    summary: {
-      problem:
-        "Windstream needed 24/7 security operations for a Fortune 500 telecom, and none of it existed yet.",
-      outcome:
-        "Built the SOC from scratch, owned the full PSIM lifecycle on Genetec Security Center, and held zero downtime through a live cutover when the vendor missed milestones.",
-    },
-    detail: {
-      problem:
-        "A Fortune 500 telecom needed 24/7 security operations and a monitoring backbone built from nothing. No SOC, no access control platform, no PSIM, no protocols.",
-      solution:
-        "Built and led the SOC from scratch: hired, trained, and managed the operations team, authored security policies and SOPs, owned departmental key management. Implemented C-CURE 9000 as the primary access control platform, then evaluated commercial PSIM offerings, selected Genetec Security Center, and programmed, configured, and deployed it end to end as the operational backbone, establishing all monitoring, triage, and incident response protocols including data center and critical infrastructure coverage. During the live cutover, the vendor missed critical milestones and a two-way system communication gap surfaced mid-deployment. Ran two tracks at once: augmented operational processes to hold full monitoring coverage through the gap, and worked directly with Genetec engineering to build a custom integration fix.",
-      outcome:
-        "A 24/7 SOC operational from scratch, protecting Fortune 500 critical infrastructure, owned across the complete PSIM chain: evaluation, selection, configuration, deployment, operations. SOC continuity held through the cutover. Zero downtime.",
-    },
-  },
-  {
     id: "analog-to-ai-ready",
     tag: "The Builder",
+    diagram: "data-foundation",
     title: "A manual, analog design program rebuilt into an AI-ready data product",
     summary: {
       problem:
@@ -85,6 +69,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "measuring-the-ai",
     tag: "The Part Most Teams Skip",
+    diagram: "eval-loop",
     title: "Building the AI was half of it. Proving it still worked was the other half.",
     summary: {
       problem:
@@ -99,6 +84,25 @@ export const caseStudies: CaseStudy[] = [
         "Built the measurement layer as first-class infrastructure. A held-out gold set of question and answer pairs, either authored directly or promoted from answers that had already been curated as correct. A scheduled evaluation pass that re-asks every one of them and has a second model grade the new answer against the gold. Per-pair regression detection, so a specific answer degrading surfaces rather than averaging away inside an aggregate. A dashboard reading one row for headline health so status stays cheap, with the per-pair detail on the slow path for debugging. Alongside it, a tuning loop scored against a labeled benchmark of positive and negative examples on precision, recall, and F1, which promotes a candidate configuration only when it beats the baseline outright, and a continuous integration guard that blocks a regression from reaching the system at all.",
       outcome:
         "Answer quality became a number instead of an impression. No configuration change shipped without measurably beating what it replaced. The system could be changed with confidence, which is the difference between an AI demo and an AI system people are allowed to depend on.",
+    },
+  },
+  {
+    id: "building-the-soc",
+    tag: "The Operator",
+    title: "A 24/7 SOC built from nothing, held through a vendor failure",
+    summary: {
+      problem:
+        "Windstream needed 24/7 security operations for a Fortune 500 telecom, and none of it existed yet.",
+      outcome:
+        "Built the SOC from scratch, owned the full PSIM lifecycle on Genetec Security Center, and held zero downtime through a live cutover when the vendor missed milestones.",
+    },
+    detail: {
+      problem:
+        "A Fortune 500 telecom needed 24/7 security operations and a monitoring backbone built from nothing. No SOC, no access control platform, no PSIM, no protocols.",
+      solution:
+        "Built and led the SOC from scratch: hired, trained, and managed the operations team, authored security policies and SOPs, owned departmental key management. Implemented C-CURE 9000 as the primary access control platform, then evaluated commercial PSIM offerings, selected Genetec Security Center, and programmed, configured, and deployed it end to end as the operational backbone, establishing all monitoring, triage, and incident response protocols including data center and critical infrastructure coverage. During the live cutover, the vendor missed critical milestones and a two-way system communication gap surfaced mid-deployment. Ran two tracks at once: augmented operational processes to hold full monitoring coverage through the gap, and worked directly with Genetec engineering to build a custom integration fix.",
+      outcome:
+        "A 24/7 SOC operational from scratch, protecting Fortune 500 critical infrastructure, owned across the complete PSIM chain: evaluation, selection, configuration, deployment, operations. SOC continuity held through the cutover. Zero downtime.",
     },
   },
   {
@@ -119,5 +123,4 @@ export const caseStudies: CaseStudy[] = [
       outcome:
         "Client tested it and responded, “that's the money right there,” then spec'd an additional analytics module unprompted: lead counts, outflow by lead type, opens, closings, 30-day target-vs-actual with flat-line alerting, and year-over-year replay.",
     },
-  },
-]
+  },]
