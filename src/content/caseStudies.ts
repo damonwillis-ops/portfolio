@@ -1,4 +1,9 @@
 // Sourced from ~/knowledge/career/evidence-bank.md (A1) and master-profile.md.
+// The "measuring-the-ai" study is sourced from ~/knowledge/career/technical-evidence.md,
+// sections 1 and 2, which trace every claim in it to a repo, a file, and a count.
+// Two standing constraints from that file apply here: never state an agent
+// headcount, and never call this model training. It is evaluation and tuning.
+// Never link the repositories from this site — they run on proprietary data.
 // Detail paragraphs are the full P/S/O; summary lines are the collapsed
 // one-liners a scanning reader sees before expanding. Per Damon's brief,
 // the summary has to carry real weight on its own, so both lines below
@@ -75,6 +80,25 @@ export const caseStudies: CaseStudy[] = [
         "Drove structural transformation as the organization's AI adoption lead. Onboarded a digital lifecycle management platform across 4,600+ locations. Built a data lake integration delivering high-integrity security device data that had not previously existed at enterprise scale. Launched the first-ever device mapping program, capturing 450,000+ records with images and metadata annually. Then built three platforms on top of that foundation: a design validation and vendor-performance platform used by 24 third-party designers, which won a company innovation award; an AI computer-vision design assurance layer that validates camera placements against codified deployment requirements and moves defect detection upstream of installation; and a multi-agent orchestration engine with a layered decision system, delivering traceable, risk-scored answers to program questions under strict latency SLOs.",
       outcome:
         "A program invisible to the enterprise became a structured, queryable, AI-enabled data product. 450,000+ device records captured annually. Defect detection moved upstream of installation. One platform recognized with a company innovation award.",
+    },
+  },
+  {
+    id: "measuring-the-ai",
+    tag: "The Part Most Teams Skip",
+    title: "Building the AI was half of it. Proving it still worked was the other half.",
+    summary: {
+      problem:
+        "Once leadership started acting on AI-generated answers, nobody could tell whether those answers were getting better or quietly getting worse.",
+      outcome:
+        "Built the evaluation layer: a held-out gold set, scheduled re-grading, per-pair regression detection, and a tuning loop that refuses to ship a change unless it beats its own baseline on precision, recall, and F1.",
+    },
+    detail: {
+      problem:
+        "An AI system that answers questions for executives has a failure mode worse than being wrong: being confidently wrong, gradually, without anyone noticing. Every change to a prompt, a retrieval rule, or a data source can quietly degrade answer quality, and the people consuming the answers are the least equipped to detect it. Plenty of teams ship the model. Far fewer ship the thing that tells you it still works.",
+      solution:
+        "Built the measurement layer as first-class infrastructure. A held-out gold set of question and answer pairs, either authored directly or promoted from answers that had already been curated as correct. A scheduled evaluation pass that re-asks every one of them and has a second model grade the new answer against the gold. Per-pair regression detection, so a specific answer degrading surfaces rather than averaging away inside an aggregate. A dashboard reading one row for headline health so status stays cheap, with the per-pair detail on the slow path for debugging. Alongside it, a tuning loop scored against a labeled benchmark of positive and negative examples on precision, recall, and F1, which promotes a candidate configuration only when it beats the baseline outright, and a continuous integration guard that blocks a regression from reaching the system at all.",
+      outcome:
+        "Answer quality became a number instead of an impression. No configuration change shipped without measurably beating what it replaced. The system could be changed with confidence, which is the difference between an AI demo and an AI system people are allowed to depend on.",
     },
   },
   {

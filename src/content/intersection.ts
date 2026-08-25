@@ -10,6 +10,11 @@ export const intersection = {
       label: "Both, and sat in the buyer's chair on enterprise security platform purchases",
       value: "A few dozen, nationally",
     },
+    {
+      label:
+        "Of those, the ones who also built the evaluation harness that decides whether an AI change ships",
+      value: "Vanishingly few",
+    },
   ],
 }
 
