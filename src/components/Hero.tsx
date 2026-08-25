@@ -50,6 +50,8 @@ export function Hero() {
           <div
             key={claim.word}
             className={`flex-1 basis-[200px] py-6 pr-7 ${
+              i > 0 ? "pl-7 max-sm:pl-0" : ""
+            } ${
               i < hero.claims.length - 1 ? "border-r border-border max-sm:border-r-0 max-sm:border-b" : ""
             } max-sm:basis-full max-sm:py-5`}
           >
@@ -59,7 +61,7 @@ export function Hero() {
             <div className="font-display text-[clamp(1.9rem,3.4vw,2.6rem)] leading-none font-normal tabular-nums text-text">
               {claim.figure}
             </div>
-            <div className="mt-2 font-mono text-[0.7rem] tracking-[0.04em] text-text-dim">
+            <div className="mt-2.5 font-mono text-[0.7rem] leading-[1.75] tracking-[0.04em] text-text-dim">
               {claim.caption}
             </div>
           </div>
