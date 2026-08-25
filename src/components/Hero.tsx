@@ -35,9 +35,9 @@ export function Hero() {
         <img
           src="/headshot.jpg"
           alt="Damon Willis, CPP"
-          width={448}
-          height={448}
-          className="reveal h-36 w-36 shrink-0 border border-border object-cover grayscale-[15%] sm:h-44 sm:w-44 sm:translate-y-1 lg:h-52 lg:w-52"
+          width={560}
+          height={560}
+          className="reveal h-36 w-36 shrink-0 border border-border object-cover grayscale-[15%] sm:h-44 sm:w-44 sm:translate-y-1 md:h-52 md:w-52 lg:h-[260px] lg:w-[260px]"
           style={{ animationDelay: "0.16s" }}
         />
       </div>
