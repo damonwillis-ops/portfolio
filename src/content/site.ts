@@ -56,7 +56,7 @@ export const hero = {
  *  repeated sentence. */
 export const signal = {
   eyebrow: "The signal",
-  claim: "Physical infrastructure becomes data. Data becomes intelligence. I build the layer in between.",
+  claim: "I define the standard. I own QA/QC through delivery. Then I build the dataset that runs the business.",
 }
 
 /** The hero's identity column. A personal introduction, not a biography —
