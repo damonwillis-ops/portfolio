@@ -51,6 +51,14 @@ export const hero = {
   facts: ["18 years", "Fortune 1 and Fortune 500 scale", "CPP", "U.S. Coast Guard veteran"],
 }
 
+/** The claim that earns the signal diagram its space. Distinct wording from
+ *  thesis.title and aiReady.close further down the page -- same idea, not a
+ *  repeated sentence. */
+export const signal = {
+  eyebrow: "The signal",
+  claim: "Physical infrastructure becomes data. Data becomes intelligence. I build the layer in between.",
+}
+
 /** The hero's identity column. A personal introduction, not a biography —
  *  no credentials, no Coast Guard/DARC/firearms detail. Those live in
  *  `aboutSection`, further down, where nav "About" actually points. */
