@@ -110,8 +110,25 @@ export const thesis = {
     { label: "Automation", sub: "gates, checks" },
     { label: "AI", sub: "measured, not assumed" },
   ],
+  /** How uncertainty becomes a decision. Three beats, set as type rather
+   *  than as a diagram: the words carry it, and the page's only schematics
+   *  should be the ones showing something type cannot. Each links to the
+   *  work that proves it. */
+  beats: [
+    { title: "Visible", body: "Capture what was never recorded.", link: { label: "Case 03", href: "#device-records" } },
+    {
+      title: "Verifiable",
+      body: "Gate it against the standard before it counts.",
+      link: { label: "Selected systems", href: "#selected-work" },
+    },
+    {
+      title: "Trusted",
+      body: "Prove it holds up, even against my own case.",
+      link: { label: "Case 02", href: "#cad-to-digital" },
+    },
+  ],
   close:
-    "Most of my career has been the left side of that chain: the physical systems, the capture, the data model, the standards. It is the part AI projects in physical operations tend to underestimate. I'm not an AI researcher. I'm the person who makes the physical layer ready for one.",
+    "Most of my career has been the clarity step: the capture, the standards, the validation, the data model. It is the part AI projects in physical operations tend to underestimate. I'm not an AI researcher. I'm the person who makes the physical layer ready for one.",
 }
 
 export interface MethodStep {

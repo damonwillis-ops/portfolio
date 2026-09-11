@@ -78,6 +78,28 @@ export function Thesis() {
             <div className="mt-16" data-reveal>
               <Flow steps={thesis.chain} label="From the physical world to AI" />
             </div>
+            {/* Uncertainty to a decision, in three beats. Type, not a
+                diagram: boxes around words earn nothing here. */}
+            <ul className="mt-14 grid gap-x-10 gap-y-9 sm:grid-cols-3">
+              {thesis.beats.map((b, i) => (
+                <li
+                  key={b.title}
+                  className="sigline border-t border-line pt-5"
+                  data-reveal
+                  style={{ "--d": `${i * 80}ms` } as Vars}
+                >
+                  <p className="t-meta text-signal">0{i + 1}</p>
+                  <h3 className="mt-2 text-[1.15rem] font-medium tracking-tight text-ink">{b.title}</h3>
+                  <p className="t-body mt-2 text-[0.96rem] leading-relaxed">{b.body}</p>
+                  <a
+                    href={b.link.href}
+                    className="lnk mt-3 inline-block font-mono text-[0.72rem] tracking-[0.08em] uppercase"
+                  >
+                    {b.link.label} →
+                  </a>
+                </li>
+              ))}
+            </ul>
             <p className="mt-12 max-w-3xl text-[1.15rem] leading-relaxed text-ink lg:text-[1.25rem]" data-reveal>
               {thesis.close}
             </p>
