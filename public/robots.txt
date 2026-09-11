@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-production-b0ec7.up.railway.app/sitemap.xml

@@ -1,11 +1,13 @@
+import { person } from "../content/site"
+
 export function Footer() {
   return (
-    <footer className="border-t border-border px-6 py-8 sm:px-8 print:hidden">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 font-mono text-[0.7rem] text-text-dim">
-        <span>Damon Willis, CPP · Bella Vista, AR</span>
-        <a href="mailto:damonwillis@icloud.com" className="hover:text-accent">
-          damonwillis@icloud.com
-        </a>
+    <footer className="border-t border-line">
+      <div className="wrap flex flex-col gap-3 py-10 sm:flex-row sm:items-center sm:justify-between">
+        <p className="t-caption">
+          © 2026 {person.name}, {person.post}
+        </p>
+        <p className="t-caption">Schematics redrawn. No proprietary data on this site. No trackers.</p>
       </div>
     </footer>
   )

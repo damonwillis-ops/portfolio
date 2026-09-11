@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#0c0d0f"/>
-  <text x="16" y="22" font-family="Georgia, serif" font-size="16" font-weight="600" fill="#c1893c" text-anchor="middle">DW</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="4" fill="#0d0f12"/><path d="M8 24 H24 M16 24 V11" stroke="#343b44" stroke-width="2"/><circle cx="16" cy="9" r="4" fill="#c1893c"/></svg>

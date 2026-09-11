@@ -1,71 +1,115 @@
-import { hero } from "../content/site"
+import { hero, person } from "../content/site"
+import { DownloadIcon } from "./icons"
+
+/* The thesis as architecture: physical estate at the bottom, signal rising
+   through sensors, data, and systems to intelligence and AI. Gray is the
+   infrastructure. Amber is the signal moving through it. */
+
+const SENSOR_X = [130, 172, 214, 256, 298, 340, 382, 424, 466, 508]
+const SYSTEMS = [
+  { x: 200, label: "ACCESS" },
+  { x: 320, label: "VIDEO" },
+  { x: 440, label: "LIFECYCLE" },
+]
+const ROWS = [
+  { y: 44, label: "AI", on: true },
+  { y: 114, label: "INTELLIGENCE" },
+  { y: 194, label: "SYSTEMS" },
+  { y: 284, label: "DATA" },
+  { y: 370, label: "SENSORS" },
+  { y: 402, label: "PHYSICAL" },
+]
+
+function HeroSignal() {
+  return (
+    <div className="mx-auto w-full max-w-[34rem]" data-progress>
+      <svg viewBox="0 0 520 420" className="sx block h-auto w-full" role="img" aria-label="Signal rising from physical sensors through data and systems to intelligence and AI">
+        {ROWS.map((r) => (
+          <text key={r.label} x={0} y={r.y + 3} className={r.on ? "sx-m-on" : "sx-m"}>
+            {r.label}
+          </text>
+        ))}
+
+        {/* physical estate */}
+        <path d="M120 402 H516" className="sx-line sx-draw" pathLength={1} />
+        {SENSOR_X.map((x) => (
+          <path key={`t${x}`} d={`M${x} 402 V396`} className="sx-line" />
+        ))}
+
+        {/* sensors up to the data bus */}
+        {SENSOR_X.map((x, i) => (
+          <path
+            key={`s${x}`}
+            d={`M${x} 366 V284`}
+            className="sx-line sx-draw"
+            pathLength={1}
+            style={{ ["--delay" as string]: `${0.15 + i * 0.04}s` }}
+          />
+        ))}
+        <path d="M120 284 H516" className="sx-line sx-draw" pathLength={1} style={{ ["--delay" as string]: "0.5s" }} />
+
+        {/* bus to systems, systems to intelligence, intelligence to AI */}
+        {SYSTEMS.map((s) => (
+          <path key={`b${s.x}`} d={`M${s.x} 284 V209`} className="sx-line sx-draw" pathLength={1} style={{ ["--delay" as string]: "0.7s" }} />
+        ))}
+        <path d="M200 179 V148 H440 V179 M320 148 V179 M320 148 V120" className="sx-line sx-draw" pathLength={1} style={{ ["--delay" as string]: "0.9s" }} />
+        <path d="M320 108 V53" className="sx-line sx-draw" pathLength={1} style={{ ["--delay" as string]: "1.1s" }} />
+
+        {/* the signal: three pulses, staggered, beneath the nodes */}
+        <path d="M172 366 V284 H200 V148 H320 V53" pathLength={100} className="sx-pulse" style={{ ["--delay" as string]: "0.6s", ["--dur" as string]: "7.5s" }} />
+        <path d="M340 366 V284 H320 V53" pathLength={100} className="sx-pulse" style={{ ["--delay" as string]: "3.1s", ["--dur" as string]: "7.5s" }} />
+        <path d="M466 366 V284 H440 V148 H320 V53" pathLength={100} className="sx-pulse" style={{ ["--delay" as string]: "5.6s", ["--dur" as string]: "7.5s" }} />
+
+        {SENSOR_X.map((x) => (
+          <rect key={`n${x}`} x={x - 4} y={362} width={8} height={8} className="sx-node" />
+        ))}
+        {SENSOR_X.map((x) => (
+          <circle key={`j${x}`} cx={x} cy={284} r={2} fill="var(--color-line-2)" />
+        ))}
+        {SYSTEMS.map((s) => (
+          <g key={s.label}>
+            <rect x={s.x - 42} y={179} width={84} height={30} rx={2} className="sx-box" />
+            <text x={s.x} y={198} textAnchor="middle" className="sx-m">
+              {s.label}
+            </text>
+          </g>
+        ))}
+        <circle cx={320} cy={114} r={6} className="sx-node" />
+        <circle cx={320} cy={44} r={9} fill="var(--color-bg)" stroke="var(--color-signal)" strokeWidth={1.25} />
+        <circle cx={320} cy={44} r={3} fill="var(--color-signal)" />
+      </svg>
+    </div>
+  )
+}
 
 export function Hero() {
   return (
-    <section
-      id="top"
-      className="mx-auto max-w-6xl px-6 pt-16 pb-12 sm:px-8 sm:pt-24 sm:pb-16"
-    >
-      <div className="mb-12 flex flex-col-reverse items-start gap-9 sm:flex-row sm:items-start sm:justify-between sm:gap-12">
-        <div className="min-w-0 flex-1">
-          <p className="reveal mb-6 font-mono text-[0.78rem] tracking-[0.16em] text-accent uppercase">
-            {hero.eyebrow}
-          </p>
-
-          <h1
-            className="reveal mb-7 max-w-[15ch] font-display text-[clamp(2.4rem,5.6vw,4.6rem)] leading-[1.05] tracking-[-0.01em] text-text"
-            style={{ animationDelay: "0.1s" }}
-          >
-            {hero.headline[0]}
-            <br />
-            {hero.headline[1]}
-            <em className="font-normal text-accent italic">
-              {hero.headlineEmphasis}
-            </em>
+    <section id="top" className="relative pt-28 pb-16 sm:pt-36 lg:pt-40 lg:pb-24" aria-labelledby="hero-title">
+      <div className="wrap grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-7" data-reveal>
+          <p className="t-meta sec-label">{hero.eyebrow}</p>
+          <h1 id="hero-title" className="t-display mt-7">
+            {hero.headline}
           </h1>
-
-          <p
-            className="reveal max-w-[56ch] text-[clamp(1.05rem,1.6vw,1.22rem)] leading-relaxed text-text-dim"
-            style={{ animationDelay: "0.2s" }}
-          >
-            {hero.sub}
-          </p>
-        </div>
-
-        <img
-          src="/headshot.jpg"
-          alt="Damon Willis, CPP"
-          width={560}
-          height={560}
-          className="reveal h-36 w-36 shrink-0 border border-border object-cover grayscale-[15%] sm:h-44 sm:w-44 sm:translate-y-1 md:h-52 md:w-52 lg:h-[260px] lg:w-[260px]"
-          style={{ animationDelay: "0.16s" }}
-        />
-      </div>
-
-      <div
-        className="reveal flex flex-wrap border-t border-b border-border"
-        style={{ animationDelay: "0.32s" }}
-      >
-        {hero.claims.map((claim, i) => (
-          <div
-            key={claim.word}
-            className={`flex-1 basis-[200px] py-6 pr-7 ${
-              i > 0 ? "pl-7 max-sm:pl-0" : ""
-            } ${
-              i < hero.claims.length - 1 ? "border-r border-border max-sm:border-r-0 max-sm:border-b" : ""
-            } max-sm:basis-full max-sm:py-5`}
-          >
-            <div className="mb-2 font-mono text-[0.72rem] tracking-[0.14em] text-text-dim uppercase">
-              The <b className="font-medium text-accent">{claim.word}</b>
-            </div>
-            <div className="font-display text-[clamp(1.9rem,3.4vw,2.6rem)] leading-none font-normal tabular-nums text-text">
-              {claim.figure}
-            </div>
-            <div className="mt-2.5 font-mono text-[0.7rem] leading-[1.75] tracking-[0.04em] text-text-dim">
-              {claim.caption}
-            </div>
+          <p className="t-lead mt-7 max-w-2xl">{hero.sub}</p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <a href="#work" className="btn btn-solid">
+              See the work
+            </a>
+            <a href={person.resume} download className="btn">
+              Download resume
+              <DownloadIcon />
+            </a>
           </div>
-        ))}
+          <ul className="t-meta mt-10 flex flex-wrap gap-x-5 gap-y-2" aria-label="At a glance">
+            {hero.facts.map((f) => (
+              <li key={f}>{f}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="lg:col-span-5" data-reveal style={{ ["--d" as string]: "150ms" }}>
+          <HeroSignal />
+        </div>
       </div>
     </section>
   )

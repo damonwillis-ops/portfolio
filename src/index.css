@@ -1,139 +1,586 @@
 @import "tailwindcss";
 
-@import "@fontsource-variable/fraunces/full.css";
-@import "@fontsource-variable/fraunces/full-italic.css";
-@import "@fontsource/public-sans/400.css";
-@import "@fontsource/public-sans/500.css";
-@import "@fontsource/public-sans/600.css";
-@import "@fontsource/jetbrains-mono/400.css";
-@import "@fontsource/jetbrains-mono/500.css";
+/* ============================================================
+   DAMON WILLIS — DESIGN SYSTEM
+   Charcoal carries the page. Warm white carries the information.
+   Amber is the signal: evidence, activity, connection, motion.
+   If amber appears, it has to mean one of those four things.
+   ============================================================ */
 
 @theme {
-  --color-bg: #0c0d0f;
-  --color-bg-raised: #17191d;
-  --color-text: #ece6da;
-  --color-text-dim: #8d9096;
-  --color-accent: #c1893c;
-  --color-accent-dim: #5e4726;
-  --color-border: #26282e;
+  --color-bg: #0d0f12;
+  --color-bg-2: #111418;
+  --color-surface: #161a1f;
+  --color-surface-2: #1c2127;
+  --color-line: #242a31;
+  --color-line-2: #343b44;
+  --color-ink: #ece8e0;
+  --color-ink-2: #a6abb2;
+  --color-ink-3: #7b818a;
+  --color-signal: #c1893c;
+  --color-signal-hi: #dcaa5e;
+  --color-signal-dim: #5e4726;
 
-  --font-display: "Fraunces Variable", Georgia, serif;
-  --font-body: "Public Sans", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "IBM Plex Sans Variable", "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease-signal: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 html {
-  scroll-behavior: smooth;
+  background: var(--color-bg);
+  color: var(--color-ink);
   color-scheme: dark;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  margin: 0;
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-::selection {
-  background: var(--color-accent-dim);
-  color: var(--color-text);
+@media (min-width: 64rem) {
+  body { font-size: 1.125rem; }
 }
 
-@media print {
-  body {
-    background: #fff;
-    color: #111;
-  }
+::selection { background: var(--color-signal-dim); color: var(--color-ink); }
 
-  a {
-    color: #111 !important;
-    text-decoration: underline;
-  }
-
-  .text-accent {
-    color: #7a5623 !important;
-  }
-
-  .text-text-dim {
-    color: #444 !important;
-  }
-
-  .border-border,
-  .border-b,
-  .border-t,
-  .border-r {
-    border-color: #ccc !important;
-  }
-
-  .bg-bg\/90,
-  .backdrop-blur-sm {
-    position: static !important;
-    background: #fff !important;
-    backdrop-filter: none !important;
-  }
-
-  section {
-    break-inside: avoid;
-    padding-top: 1.2rem !important;
-    padding-bottom: 1.2rem !important;
-  }
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-@layer utilities {
-  .reveal {
-    opacity: 0;
-    animation: rise 0.7s ease forwards;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .reveal {
-      animation: none;
-      opacity: 1;
-    }
-  }
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Smooth accordion height via grid-template-rows, collapses to 0fr / expands to 1fr. */
-.accordion-rows {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.35s ease;
-}
-
-.accordion-rows.is-open {
-  grid-template-rows: 1fr;
-}
-
-.accordion-rows > div {
-  overflow: hidden;
-}
+p { text-wrap: pretty; }
 
 @media (prefers-reduced-motion: reduce) {
-  .accordion-rows {
-    transition: none;
+  html { scroll-behavior: auto; }
+}
+
+@layer components {
+  /* ---------- layout ---------- */
+  .wrap {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  /* ---------- type scale ---------- */
+  .t-display {
+    font-size: clamp(2.45rem, 1.2rem + 4.4vw, 4.7rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+  .t-h1 {
+    font-size: clamp(2rem, 1.15rem + 3.2vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+  .t-h2 {
+    font-size: clamp(1.45rem, 1.1rem + 1.35vw, 2.15rem);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+  .t-h3 {
+    font-size: 1.15rem;
+    line-height: 1.32;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+  .t-lead {
+    font-size: clamp(1.15rem, 1rem + 0.6vw, 1.4rem);
+    line-height: 1.5;
+    color: var(--color-ink-2);
+    text-wrap: pretty;
+  }
+  .t-body { color: var(--color-ink-2); }
+  .t-body p + p { margin-top: 1rem; }
+  .t-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+  }
+  .t-caption {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    color: var(--color-ink-3);
+  }
+  .t-metric {
+    font-weight: 300;
+    font-size: clamp(2.5rem, 1.5rem + 3.4vw, 4.4rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums lining-nums;
+    color: var(--color-signal);
+    white-space: nowrap;
+  }
+  .t-stat {
+    font-weight: 300;
+    font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.7rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums lining-nums;
+    color: var(--color-signal);
+  }
+
+  /* Amber = evidence. Inline proof inside neutral prose. Weight carries
+     the distinction too, so it survives without color. */
+  .ev {
+    color: var(--color-signal);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* ---------- links and buttons ---------- */
+  .lnk {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--color-line-2);
+    text-underline-offset: 0.3em;
+    transition: text-decoration-color 0.25s var(--ease-signal), color 0.25s var(--ease-signal);
+  }
+  .lnk:hover { text-decoration-color: var(--color-signal); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 2.9rem;
+    padding: 0 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: 1px solid var(--color-line-2);
+    border-radius: 2px;
+    color: var(--color-ink);
+    transition: border-color 0.25s var(--ease-signal), background-color 0.25s var(--ease-signal);
+  }
+  .btn:hover { border-color: var(--color-signal); }
+  .btn-solid {
+    background: var(--color-ink);
+    color: var(--color-bg);
+    border-color: var(--color-ink);
+  }
+  .btn-solid:hover { background: #fff; border-color: #fff; }
+  .btn-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-signal);
+    flex: none;
+  }
+
+  /* ---------- the signal line ----------
+     A short amber segment at rest that extends on hover or focus.
+     The page's recurring "system becoming active" gesture. */
+  .sigline { position: relative; }
+  .sigline::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--color-signal);
+    transform: scaleX(var(--rest, 0.06));
+    transform-origin: left;
+    transition: transform 0.55s var(--ease-signal);
+  }
+  .sigline:hover::before,
+  .sigline:focus-within::before { transform: scaleX(1); }
+
+  /* ---------- section header ---------- */
+  .sec {
+    border-top: 1px solid var(--color-line);
+    padding-block: clamp(4.5rem, 3rem + 6vw, 8.5rem);
+  }
+  .sec-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .sec-label::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-signal);
+    flex: none;
+  }
+
+  /* ---------- panels ---------- */
+  .panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 3px;
+  }
+
+  /* ---------- tags ---------- */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--color-line-2);
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--color-ink-2);
+    line-height: 1.3;
+  }
+
+  /* ---------- flow: scroll-linked signal chain ----------
+     --p (0..1) is written by motion.ts as the element crosses the
+     viewport. Each step computes its own state from --p, --n, --i:
+       --f  fill of the segment leaving this step
+       --on how lit this step's node is
+     Inactive: hollow gray node, gray label. Active: filled amber node,
+     warm-white label. Shape and label change, not just color. */
+  .flow { --p: 0; position: relative; }
+  .flow-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: var(--gap, 1.35rem);
+  }
+  .flow-step {
+    --f: clamp(0, calc(var(--p) * (var(--n) - 1) - var(--i)), 1);
+    --on: clamp(0, calc((var(--p) * (var(--n) - 1) - var(--i) + 0.15) * 4), 1);
+    position: relative;
+    padding-left: 1.9rem;
+  }
+  .flow-node {
+    position: absolute;
+    left: 0;
+    top: 0.3rem;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 1.5px solid color-mix(in oklab, var(--color-signal) calc(var(--on) * 100%), var(--color-line-2));
+    background: var(--color-bg);
+    z-index: 1;
+  }
+  .flow-node::after {
+    content: "";
+    position: absolute;
+    inset: 1.5px;
+    border-radius: 50%;
+    background: var(--color-signal);
+    transform: scale(var(--on));
+  }
+  .flow-label {
+    display: block;
+    font-weight: 500;
+    line-height: 1.3;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    color: color-mix(in oklab, var(--color-ink) calc(var(--on) * 100%), var(--color-ink-2));
+  }
+  .flow-sub {
+    display: block;
+    margin-top: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: var(--color-ink-3);
+  }
+  /* segment to the next step (vertical on small screens) */
+  .flow-seg {
+    position: absolute;
+    left: 4px;
+    top: calc(0.3rem + 11px);
+    width: 3px;
+    height: calc(100% + var(--gap, 1.35rem) - 11px);
+    overflow: hidden;
+  }
+  .flow-seg::before,
+  .flow-seg::after {
+    content: "";
+    position: absolute;
+    left: 1px;
+    top: 0;
+    width: 1px;
+    height: 100%;
+  }
+  .flow-seg::before { background: var(--color-line-2); }
+  .flow-seg::after {
+    background: var(--color-signal);
+    transform: scaleY(var(--f));
+    transform-origin: top;
+  }
+  /* The container is gated by --f (only fully lit segments carry a pulse);
+     the ::after travels the segment. Two layers so the gate and the
+     animation never fight over the same opacity. */
+  .flow-pulse {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+  .flow-pulse::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    opacity: 0;
+    background: linear-gradient(to bottom, transparent, var(--color-signal-hi)) no-repeat bottom / 3px 14px;
+    transform: translateY(-100%);
+  }
+
+  @media (min-width: 56rem) {
+    .flow-h .flow-list {
+      grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+      column-gap: 1.25rem;
+      row-gap: 0;
+    }
+    .flow-h .flow-step { padding-left: 0; padding-top: 1.9rem; }
+    .flow-h .flow-node { top: 0; }
+    .flow-h .flow-seg {
+      left: 11px;
+      top: 4px;
+      width: calc(100% + 1.25rem - 11px);
+      height: 3px;
+    }
+    .flow-h .flow-seg::before,
+    .flow-h .flow-seg::after { top: 1px; left: 0; width: 100%; height: 1px; }
+    .flow-h .flow-seg::after { transform: scaleX(var(--f)); transform-origin: left; }
+    .flow-h .flow-pulse::after {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to right, transparent, var(--color-signal-hi)) no-repeat right / 14px 3px;
+      transform: translateX(-100%);
+    }
+  }
+
+  /* ---------- before / transformation / after ---------- */
+  .ba-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .ba-mark {
+    width: 8px;
+    height: 8px;
+    flex: none;
+    border: 1.5px solid var(--color-line-2);
+    transform: translateY(-1px);
+  }
+  .ba-after .ba-mark { border-color: var(--color-signal); background: var(--color-signal); }
+  .ba-before .ba-item { color: var(--color-ink-3); }
+  .ba-after .ba-item { color: var(--color-ink); }
+  .ba-signal {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 5rem;
+  }
+  .ba-signal-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--color-line-2), var(--color-signal));
+    overflow: visible;
+  }
+  .ba-signal-label {
+    position: relative;
+    background: var(--color-bg);
+    padding: 0.4rem 0.6rem;
+    color: var(--color-signal);
+  }
+  @media (min-width: 56rem) {
+    .ba-signal { min-height: 100%; }
+    .ba-signal-line {
+      left: 0;
+      right: 0;
+      top: 50%;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+      background: linear-gradient(to right, var(--color-line-2), var(--color-signal));
+    }
+  }
+
+  /* ---------- schematic SVG vocabulary ---------- */
+  .sx { overflow: visible; }
+  .sx-line { stroke: var(--color-line-2); stroke-width: 1; fill: none; }
+  .sx-dash { stroke: var(--color-line-2); stroke-width: 1; fill: none; stroke-dasharray: 3 4; }
+  .sx-sig { stroke: var(--color-signal); stroke-width: 1.25; fill: none; }
+  .sx-box { fill: var(--color-surface); stroke: var(--color-line-2); stroke-width: 1; }
+  .sx-box-on { fill: var(--color-surface); stroke: var(--color-signal); stroke-width: 1; }
+  .sx-node { fill: var(--color-bg); stroke: var(--color-line-2); stroke-width: 1.25; }
+  .sx-node-on { fill: var(--color-signal); stroke: var(--color-signal); stroke-width: 1.25; }
+  .sx-t { fill: var(--color-ink); font-family: var(--font-sans); font-size: 12.5px; font-weight: 500; }
+  .sx-t2 { fill: var(--color-ink-2); font-family: var(--font-sans); font-size: 12px; }
+  .sx-m { fill: var(--color-ink-3); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; }
+  .sx-m-on { fill: var(--color-signal); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; }
+  /* travelling pulse on a path with pathLength=100 */
+  .sx-pulse {
+    stroke: var(--color-signal-hi);
+    stroke-width: 1.75;
+    fill: none;
+    stroke-linecap: round;
+    stroke-dasharray: 5 95;
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+
+  /* system map hover: a spoke goes live */
+  .sm-spoke .sx-line { transition: stroke 0.3s var(--ease-signal); }
+  .sm-spoke .sx-node { transition: fill 0.3s var(--ease-signal), stroke 0.3s var(--ease-signal); }
+  .sm-spoke .sx-t2 { transition: fill 0.3s var(--ease-signal); }
+  .sm-spoke:hover .sx-line { stroke: var(--color-signal); }
+  .sm-spoke:hover .sx-node { fill: var(--color-signal); stroke: var(--color-signal); }
+  .sm-spoke:hover .sx-t2 { fill: var(--color-ink); }
+
+  /* method grid: steps light in sequence as the section is read */
+  .m-step {
+    --on: clamp(0, calc((var(--p) * (var(--n) - 1) - var(--i) + 0.4) * 3), 1);
+    position: relative;
+    border-top: 1px solid var(--color-line-2);
+  }
+  .m-step::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--color-signal);
+    transform: scaleX(var(--on));
+    transform-origin: left;
+  }
+  .m-num {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: color-mix(in oklab, var(--color-signal) calc(var(--on) * 100%), var(--color-ink-3));
+  }
+
+  /* timeline */
+  .tl-node {
+    --on: clamp(0, calc((var(--p) * (var(--n) - 1) - var(--i) + 0.3) * 3), 1);
   }
 }
 
-@media print {
-  .accordion-rows {
-    grid-template-rows: 1fr !important;
+/* ---------- motion ----------
+   Reveal is gated on .js so a no-JS reader (or crawler) sees everything. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.8s var(--ease-signal),
+    transform 0.8s var(--ease-signal);
+  transition-delay: var(--d, 0ms);
+}
+.js [data-reveal][data-inview] { opacity: 1; transform: none; }
+
+@keyframes pulse-y {
+  0% { transform: translateY(-100%); opacity: 0; }
+  2% { opacity: 1; }
+  12% { transform: translateY(0); opacity: 1; }
+  14%, 100% { transform: translateY(0); opacity: 0; }
+}
+@keyframes pulse-x {
+  0% { transform: translateX(-100%); opacity: 0; }
+  2% { opacity: 1; }
+  12% { transform: translateX(0); opacity: 1; }
+  14%, 100% { transform: translateX(0); opacity: 0; }
+}
+@keyframes sx-travel {
+  0% { stroke-dashoffset: 100; opacity: 0; }
+  4% { opacity: 1; }
+  40% { stroke-dashoffset: 0; opacity: 1; }
+  44%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Pulses run only on fully lit segments, only while the flow is on screen.
+   Staggered by step so one signal appears to hand off down the chain. */
+.flow[data-live] .flow-pulse {
+  opacity: clamp(0, calc((var(--f) - 0.97) * 40), 1);
+}
+.flow[data-live] .flow-pulse::after {
+  animation: pulse-y 6s linear infinite;
+  animation-delay: calc(var(--i) * 0.72s);
+}
+@media (min-width: 56rem) {
+  .flow-h[data-live] .flow-pulse::after { animation-name: pulse-x; }
+}
+
+/* before / after: one signal crossing the transformation */
+.ba-pulse {
+  position: absolute;
+  left: calc(50% - 2px);
+  top: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-signal-hi);
+  opacity: 0;
+}
+[data-live] .ba-pulse { animation: ba-y 3.2s var(--ease-signal) infinite; }
+@keyframes ba-y {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  60% { top: calc(100% - 5px); opacity: 1; }
+  70%, 100% { top: calc(100% - 5px); opacity: 0; }
+}
+@media (min-width: 56rem) {
+  .ba-pulse { top: calc(50% - 2px); left: 0; }
+  [data-live] .ba-pulse { animation-name: ba-x; }
+  @keyframes ba-x {
+    0% { left: 0; opacity: 0; }
+    10% { opacity: 1; }
+    60% { left: calc(100% - 5px); opacity: 1; }
+    70%, 100% { left: calc(100% - 5px); opacity: 0; }
   }
+}
+
+[data-live] .sx-pulse {
+  animation: sx-travel var(--dur, 7s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.js .sx-draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.js [data-inview] .sx-draw { animation: draw 1.4s var(--ease-signal) forwards; animation-delay: var(--delay, 0s); }
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .flow-pulse, .sx-pulse { display: none; animation: none !important; }
+  .js .sx-draw { stroke-dasharray: none; stroke-dashoffset: 0; animation: none !important; }
+  .sigline::before, .m-step::before, .flow-seg::after { transition: none; }
+}
+
+@media print {
+  html, body { background: #fff; color: #000; }
+  .no-print { display: none !important; }
+  .js [data-reveal] { opacity: 1; transform: none; }
 }

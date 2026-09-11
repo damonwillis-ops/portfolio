@@ -1,22 +1,55 @@
+import { useEffect } from "react"
+import { initMotion } from "./lib/motion"
 import { Nav } from "./components/Nav"
 import { Hero } from "./components/Hero"
-import { Intersection } from "./components/Intersection"
-import { Work } from "./components/Work"
-import { Translation } from "./components/Translation"
-import { Credentials } from "./components/Credentials"
-import { Contact } from "./components/Contact"
+import { CaseStudies, SelectedWork } from "./components/Work"
+import {
+  About,
+  AIReady,
+  Capabilities,
+  Contact,
+  Experience,
+  Method,
+  Metrics,
+  Principles,
+  Thesis,
+} from "./components/Sections"
 import { Footer } from "./components/Footer"
 
+// Narrative order: who (hero) → scale (metrics) → the thesis → what he did
+// (case studies, then the built artifacts) → how he thinks (method, the AI
+// bridge, capabilities, principles) → the record → the person → the ask.
+// The two wrapper ids exist so the nav's Work / How I Think items stay lit
+// across every section they cover.
+
 function App() {
+  useEffect(() => initMotion(), [])
+
   return (
     <>
+      <a
+        href="#main"
+        className="sr-only z-[60] rounded-sm bg-ink px-4 py-2 text-bg focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+      >
+        Skip to content
+      </a>
       <Nav />
-      <main>
+      <main id="main">
         <Hero />
-        <Intersection />
-        <Work />
-        <Translation />
-        <Credentials />
+        <Metrics />
+        <Thesis />
+        <div id="work">
+          <CaseStudies />
+          <SelectedWork />
+        </div>
+        <div id="how-i-work">
+          <Method />
+          <AIReady />
+          <Capabilities />
+          <Principles />
+        </div>
+        <Experience />
+        <About />
         <Contact />
       </main>
       <Footer />
