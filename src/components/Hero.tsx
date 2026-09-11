@@ -149,9 +149,7 @@ export function Hero() {
         <div className="mt-20 grid gap-10 lg:mt-24 lg:grid-cols-[1fr_2.3fr] lg:items-center lg:gap-16">
           <div data-reveal style={{ ["--d" as string]: "150ms" }}>
             <p className="t-meta sec-label">{signal.eyebrow}</p>
-            <p className="mt-4 max-w-xs text-[1.15rem] leading-snug font-medium tracking-tight text-ink">
-              {signal.claim}
-            </p>
+            <p className="t-h2 mt-5 max-w-xs text-ink">{signal.claim}</p>
           </div>
           <div data-reveal style={{ ["--d" as string]: "220ms" }}>
             <HeroSignal />
