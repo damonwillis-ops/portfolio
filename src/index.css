@@ -285,100 +285,90 @@ p { text-wrap: pretty; }
   }
   .explore[open] > .explore-summary .explore-mark { transform: rotate(45deg); }
 
-  /* ---------- zoom: diagram lightbox ---------- */
-  .zoom-thumb {
+  /* ---------- console: selected systems ----------
+     Master-detail tabs. Rail is a vertical list of systems on desktop, a
+     horizontal snap row on mobile. Only the active tab carries the amber
+     bar; it either autoplays (fills over 9s, then advances) or sits full
+     once the reader has touched the component. All five panels stay in
+     the DOM, hidden by attribute, so the section is fully prerendered. */
+  .console-rail { scrollbar-width: thin; }
+  .console-tab {
     position: relative;
-    display: block;
-    width: 100%;
-    padding: 0.9rem;
-    border: 1px solid var(--color-line);
-    border-radius: 3px;
-    background: var(--color-bg);
-    text-align: left;
-    cursor: zoom-in;
-    transition: border-color 0.2s var(--ease-signal);
+    border-bottom: 1px solid var(--color-line);
   }
-  .zoom-thumb:hover,
-  .zoom-thumb:focus-visible {
-    border-color: var(--color-line-2);
-  }
-  .zoom-thumb:focus-visible {
-    outline: 1px solid var(--color-signal);
-    outline-offset: 2px;
-  }
-  .zoom-thumb > :first-child {
-    transition: transform 0.3s var(--ease-signal);
-  }
-  .zoom-thumb:hover > :first-child,
-  .zoom-thumb:focus-visible > :first-child {
-    transform: scale(1.01);
-  }
-  /* Footer row under the thumbnail, so it never sits over diagram content. */
-  .zoom-expand {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 0.75rem;
-    align-items: center;
-    gap: 0.3rem;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-ink-3);
+  .console-tab-kicker,
+  .console-tab-title {
     transition: color 0.2s var(--ease-signal);
   }
-  .zoom-thumb:hover .zoom-expand,
-  .zoom-thumb:focus-visible .zoom-expand {
-    color: var(--color-signal);
+  .console-tab:hover .console-tab-kicker,
+  .console-tab:hover .console-tab-title {
+    color: var(--color-ink-2);
   }
-
-  .zoom-dialog {
-    width: min(94vw, 72rem);
-    max-height: 90vh;
-    margin: auto;
-    padding: 0;
-    overflow: auto;
-    border: 1px solid var(--color-line-2);
-    border-radius: 4px;
-    background: var(--color-bg-2);
-    color: var(--color-ink);
+  .console-tab[aria-selected="true"] .console-tab-title { color: var(--color-ink); }
+  .console-tab[aria-selected="true"] .console-tab-kicker { color: var(--color-signal); }
+  .console-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: var(--color-signal);
+    transform: scaleX(0);
+    transform-origin: left;
   }
-  .zoom-dialog::backdrop {
-    background: rgb(8 9 11 / 0.82);
-  }
-  @starting-style {
-    .zoom-dialog[open] {
-      opacity: 0;
-      transform: scale(0.96);
+  .console-bar--full { transform: scaleX(1); }
+  .console-bar--anim { animation: console-fill-x 9s linear forwards; }
+  @media (min-width: 64rem) {
+    .console-tab { border-bottom: none; border-left: 1px solid var(--color-line); }
+    .console-bar {
+      left: -1px;
+      right: auto;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      height: auto;
+      transform: scaleY(0);
+      transform-origin: top;
     }
-    .zoom-dialog[open]::backdrop {
-      opacity: 0;
-    }
+    .console-bar--full { transform: scaleY(1); }
+    .console-bar--anim { animation-name: console-fill-y; }
   }
-  .zoom-dialog[open] {
-    opacity: 1;
-    transform: scale(1);
-    transition:
-      opacity 0.28s var(--ease-signal),
-      transform 0.28s var(--ease-signal),
-      display 0.28s allow-discrete,
-      overlay 0.28s allow-discrete;
+  @keyframes console-fill-x {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
   }
-  .zoom-dialog[open]::backdrop {
-    opacity: 1;
-    transition: opacity 0.28s var(--ease-signal);
+  @keyframes console-fill-y {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
   }
 
-  html:has(.zoom-dialog[open]) {
-    overflow: hidden;
+  /* Stage: a bordered frame with a faint blueprint grid behind the
+     diagram. The grid lives on a pseudo-element so its low opacity never
+     touches the diagram content painted after it. */
+  .console-grid { position: relative; }
+  .console-grid::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--color-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
-
-  /* Diagrams mount inside the dialog after initMotion already ran its
-     one-time scan, so they're never picked up by the scroll/inview
-     observers. Force the lit, in-view state by hand. */
-  .zoom-dialog [data-progress] { --p: 1; }
-  .zoom-dialog [data-reveal] { opacity: 1; transform: none; }
-  .zoom-dialog .sx-pulse {
+  @keyframes console-panel-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+  .js .console-panel:not([hidden]) {
+    animation: console-panel-in 0.35s var(--ease-signal);
+  }
+  /* A panel un-hidden after initMotion's one-time scan may never have
+     picked up data-live from the scroll observer. Force the same lit,
+     in-view state by hand so pulses always run once a panel is shown. */
+  .console-panel:not([hidden]) [data-progress] { --p: 1; }
+  .console-panel:not([hidden]) .sx-pulse {
     animation: sx-travel var(--dur, 7s) linear infinite;
     animation-delay: var(--delay, 0s);
   }
@@ -743,10 +733,11 @@ p { text-wrap: pretty; }
   .js .sx-draw { stroke-dasharray: none; stroke-dashoffset: 0; animation: none !important; }
   .sigline::before, .m-step::before, .flow-seg::after { transition: none; }
   .case-panel-wrap, .case-rail, .case-chevron { transition: none; }
-  .zoom-thumb > :first-child { transition: none; }
-  .zoom-thumb:hover > :first-child, .zoom-thumb:focus-visible > :first-child { transform: none; }
-  .zoom-dialog, .zoom-dialog[open] { transition: none; }
-  .zoom-dialog[open], .zoom-dialog[open]::backdrop { opacity: 1; transform: none; }
+  .js .console-panel:not([hidden]) { animation: none !important; opacity: 1; transform: none; }
+  .console-bar--anim { animation: none !important; transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 64rem) {
+  .console-bar--anim { transform: scaleY(1); }
 }
 
 @media print {
@@ -758,6 +749,8 @@ p { text-wrap: pretty; }
   .explore-body { display: block !important; }
   .case-panel-wrap { grid-template-rows: 1fr !important; }
   .case-chevron { display: none !important; }
-  .zoom-expand { display: none !important; }
-  .zoom-dialog { display: none !important; }
+  /* All five system panels print, not just the active one; autoplay bars
+     don't mean anything on paper. */
+  .console-panel[hidden] { display: block !important; }
+  .console-bar { display: none !important; }
 }

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState, type KeyboardEvent } from "react"
 import { caseStudies, workIntro, type Block, type CaseStudy } from "../content/caseStudies"
-import { selectedWork, workNote, type WorkDiagram } from "../content/work"
+import { selectedWork, workNote, type WorkDiagram, type WorkItem } from "../content/work"
 import { Rich } from "../lib/rich"
-import { BeforeAfter, Explore, Flow, SectionHead, StatGrid, Zoom } from "./ui"
+import { BeforeAfter, Explore, Flow, SectionHead, StatGrid } from "./ui"
 import { AssetRecord, EvalLoop, Lineage, PackageLibrary, StandardCard, SystemMap, ValidationGate } from "./diagrams"
 
 function Subhead({ children }: { children: string }) {
@@ -260,55 +260,193 @@ const DIAGRAMS: Record<WorkDiagram, () => React.JSX.Element> = {
   lineage: Lineage,
 }
 
+/** One rail entry. Only the active tab carries the amber fill bar: full and
+ *  static once the reader has touched the component or reduced motion is on,
+ *  otherwise animated and reporting back via onFillEnd so the parent can
+ *  advance in lockstep with the visible fill. */
+function ConsoleTab({
+  w,
+  active,
+  playing,
+  full,
+  onSelect,
+  onFillEnd,
+  tabRef,
+}: {
+  w: WorkItem
+  active: boolean
+  playing: boolean
+  full: boolean
+  onSelect: () => void
+  onFillEnd: () => void
+  tabRef: (el: HTMLButtonElement | null) => void
+}) {
+  return (
+    <button
+      ref={tabRef}
+      type="button"
+      role="tab"
+      id={`sw-tab-${w.id}`}
+      aria-selected={active}
+      aria-controls={`sw-panel-${w.id}`}
+      tabIndex={active ? 0 : -1}
+      onClick={onSelect}
+      className="console-tab block w-[13.5rem] flex-none snap-start px-5 py-4 text-left lg:w-full"
+    >
+      <span className="console-tab-kicker t-meta block">{w.kicker}</span>
+      <span className="console-tab-title mt-1 block text-[1.05rem] font-medium tracking-tight text-ink-3">
+        {w.title}
+      </span>
+      {active &&
+        (full ? (
+          <span className="console-bar console-bar--full" aria-hidden="true" />
+        ) : (
+          <span
+            className="console-bar console-bar--anim"
+            style={{ animationPlayState: playing ? "running" : "paused" }}
+            onAnimationEnd={onFillEnd}
+            aria-hidden="true"
+          />
+        ))}
+    </button>
+  )
+}
+
+/** One system's full detail. Always in the DOM (prerendered, crawlable);
+ *  `hidden` just toggles which one is on screen. */
+function ConsolePanel({ w, D, active }: { w: WorkItem; D: () => React.JSX.Element; active: boolean }) {
+  return (
+    <div
+      role="tabpanel"
+      id={`sw-panel-${w.id}`}
+      aria-labelledby={`sw-tab-${w.id}`}
+      hidden={!active}
+      className="console-panel"
+    >
+      <h3 className="t-h2 text-ink">{w.title}</h3>
+      <p className="t-body mt-4 max-w-2xl">
+        <Rich text={w.sentence} />
+      </p>
+      <p className="t-caption mt-3">
+        <Rich text={w.proof} />
+      </p>
+      <div className="mt-8 rounded-[3px] border border-line bg-bg">
+        <div className="flex items-center justify-between border-b border-line px-4 py-2.5 font-mono text-[0.68rem] tracking-[0.1em] text-ink-3 uppercase">
+          <span>FIG. {w.kicker}</span>
+          <span>Schematic · illustrative</span>
+        </div>
+        <div className="console-grid p-5 sm:p-8">
+          <D />
+        </div>
+      </div>
+      {w.detail.length > 0 && (
+        <ul className="mt-8 grid gap-x-10 gap-y-4 sm:grid-cols-2">
+          {w.detail.map((n) => (
+            <li key={n} className="flex gap-3 text-[0.94rem] leading-relaxed">
+              <span className="mt-[0.6em] h-1 w-1 flex-none bg-ink-3" aria-hidden="true" />
+              <span>
+                <Rich text={n} />
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+/** Master-detail tabs, one per system, with a subtle "live console"
+ *  autoplay: the active tab's bar fills over 9s, then advances, as long as
+ *  the section is on screen and the reader hasn't touched it yet. */
 export function SelectedWork() {
+  const n = selectedWork.length
+  const [active, setActive] = useState(0)
+  const [stopped, setStopped] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const [inView, setInView] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const reducedRef = useRef(false)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
+
+  useEffect(() => {
+    reducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    setMounted(true)
+    if (reducedRef.current) return
+    const el = rootRef.current
+    if (!el) return
+    const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.4 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  // On phones the rail is a horizontal strip: keep the active tab in it,
+  // scrolling the strip only (never the page).
+  useEffect(() => {
+    const tab = tabRefs.current[active]
+    const rail = tab?.parentElement
+    if (!tab || !rail || rail.scrollWidth <= rail.clientWidth) return
+    const left = rail.scrollLeft + tab.getBoundingClientRect().left - rail.getBoundingClientRect().left
+    rail.scrollTo({ left, behavior: reducedRef.current ? "auto" : "smooth" })
+  }, [active])
+
+  const stop = () => setStopped(true)
+  const playing = mounted && !reducedRef.current && !stopped && !hovered && inView
+  const full = stopped || !mounted || reducedRef.current
+
+  function onTabsKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+    let next = -1
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") next = (active + 1) % n
+    else if (e.key === "ArrowUp" || e.key === "ArrowLeft") next = (active - 1 + n) % n
+    else if (e.key === "Home") next = 0
+    else if (e.key === "End") next = n - 1
+    if (next < 0) return
+    e.preventDefault()
+    setActive(next)
+    tabRefs.current[next]?.focus()
+  }
+
   return (
     <section className="sec" id="selected-work" aria-labelledby="sw-title">
       <div className="wrap">
         <SectionHead id="sw-title" label="Selected systems" title="Show the build, not the pitch." lead={workNote} />
-        <div className="mt-14 grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-          {selectedWork.map((w) => {
-            const D = DIAGRAMS[w.diagram]
-            return (
-              <article
+        <div
+          ref={rootRef}
+          className="console mt-14 grid grid-cols-1 gap-10 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-14"
+          onClick={stop}
+          onKeyDown={stop}
+          onTouchStart={stop}
+          onFocus={stop}
+          onPointerEnter={() => setHovered(true)}
+          onPointerLeave={() => setHovered(false)}
+        >
+          <div
+            role="tablist"
+            aria-orientation="vertical"
+            aria-label="Selected systems"
+            className="console-rail flex min-w-0 snap-x overflow-x-auto lg:flex-col lg:overflow-visible"
+            onKeyDown={onTabsKeyDown}
+          >
+            {selectedWork.map((w, i) => (
+              <ConsoleTab
                 key={w.id}
-                className="sigline border-t border-line pt-6"
-                aria-labelledby={`${w.id}-title`}
-                data-reveal
-              >
-                <p className="t-meta">{w.kicker}</p>
-                <h3 id={`${w.id}-title`} className="t-h2 mt-3 text-ink">
-                  {w.title}
-                </h3>
-                <p className="t-body mt-4 text-[0.96rem] leading-relaxed">
-                  <Rich text={w.sentence} />
-                </p>
-                <p className="t-caption mt-4">
-                  <Rich text={w.proof} />
-                </p>
-                {(w.detail.length > 0 || w.diagram) && (
-                  <Explore label="Explore" gap="space-y-6">
-                    <figure>
-                      <Zoom title={w.title} kicker={w.kicker}>
-                        <D />
-                      </Zoom>
-                    </figure>
-                    {w.detail.length > 0 && (
-                      <ul className="space-y-3">
-                        {w.detail.map((n) => (
-                          <li key={n} className="t-body flex gap-3 text-[0.94rem] leading-relaxed">
-                            <span className="mt-[0.6em] h-1 w-1 flex-none bg-ink-3" aria-hidden="true" />
-                            <span>
-                              <Rich text={n} />
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </Explore>
-                )}
-              </article>
-            )
-          })}
+                w={w}
+                active={i === active}
+                playing={playing}
+                full={full}
+                onSelect={() => setActive(i)}
+                onFillEnd={() => setActive((cur) => (cur + 1) % n)}
+                tabRef={(el) => {
+                  tabRefs.current[i] = el
+                }}
+              />
+            ))}
+          </div>
+          <div className="console-stage min-w-0">
+            {selectedWork.map((w, i) => (
+              <ConsolePanel key={w.id} w={w} D={DIAGRAMS[w.diagram]} active={i === active} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
