@@ -12,14 +12,19 @@
 // - The eval harness gates on F1 when run. Never "enforced in CI."
 // - The data warehouse: drove the requirement, did not build it.
 //
-// 2026-09-11 revision: cut ~30% of vertical scroll. About moved up, right
-// after the hero, compact two-column — the visitor meets Damon before reading
-// several thousand words about his work. Case studies cut from four to three;
-// the fourth (the ROI/adoption story) is folded into case 02, which is where
-// that business case actually happened. Method 9 steps -> 5. AI-Ready and
-// Capabilities compressed. Principles 6 -> 3. This is a content-architecture
-// cut, not a CSS-compression one: no font size, spacing, or component shrank
-// to make room. See decisions/2026-09-11-portfolio-scroll-reduction.md.
+// 2026-09-11 revision: cut ~30% of vertical scroll. Case studies cut from
+// four to three; the fourth (the ROI/adoption story) is folded into case 02,
+// which is where that business case actually happened. Method 9 steps -> 5.
+// AI-Ready and Capabilities compressed. Principles 6 -> 3. This is a
+// content-architecture cut, not a CSS-compression one: no font size, spacing,
+// or component shrank to make room.
+//
+// 2026-09-11 hero refinement: identity moved INTO the hero as a restrained
+// 35% column (headshot, name, title, positioning, pattern line) rather than
+// a full-width band below it — two columns, one system, not two cards. `about`
+// below is the teaser used there; it does not carry credentials or biography,
+// so it never duplicates the real About section further down the page
+// (`aboutSection`), which nav "About" actually points to.
 
 export const person = {
   name: "Damon Willis",
@@ -46,17 +51,26 @@ export const hero = {
   facts: ["18 years", "Fortune 1 and Fortune 500 scale", "CPP", "U.S. Coast Guard veteran"],
 }
 
-/** Compact About, directly under the hero. Not the biography — the
- *  introduction. The tactical/personal material lives in `beyondTheWork`,
- *  near the bottom, small. */
+/** The hero's identity column. A personal introduction, not a biography —
+ *  no credentials, no Coast Guard/DARC/firearms detail. Those live in
+ *  `aboutSection`, further down, where nav "About" actually points. */
 export const about = {
-  label: "About",
   name: "Damon Willis, CPP",
   title: "Security Technology & Systems Leader",
   positioning:
     "I build the systems that turn complex physical infrastructure into usable data, scalable operations, and intelligent systems.",
   pattern:
     "The pattern across all of it: I walk into programs that run on drawings, spreadsheets, and memory, and leave them running on data.",
+}
+
+/** The real About section. Placed later in the page (not right after the
+ *  hero) so it doesn't restate the hero identity column verbatim — it adds
+ *  the credentials and the one piece of personal/tactical material that's
+ *  strategically relevant, instead of repeating name/title/positioning. */
+export const aboutSection = {
+  label: "About",
+  title: "Beyond the systems.",
+  bio: "Ten years as opposing force at the Direct Action Resource Center, running force-on-force against military special operations and law enforcement tactical teams. I have personally run the attack path security designs are meant to stop.",
   credentials: [
     "ASIS Certified Protection Professional (CPP)",
     "U.S. Coast Guard veteran",
@@ -70,12 +84,19 @@ export interface Metric {
   note?: string
 }
 
-export const metrics: Metric[] = [
+/** Two tiers, not a statistics wall: primary is the scope of the program,
+ *  secondary is what the program produced. Primary renders larger. */
+export const metricsPrimary: Metric[] = [
   { value: "$327M", label: "Physical security capital program" },
   { value: "1,600+", label: "Engineered designs a year" },
   { value: "800+", label: "Remodel projects a year" },
+]
+
+export const metricsSecondary: Metric[] = [
   { value: "$800K–$1.6M", label: "Annual savings", note: "approved business case" },
   { value: "30%", label: "Faster project cycles", note: "approved business case" },
+  { value: "450K+", label: "Device records a year" },
+  { value: "4,500+", label: "Locations on one system of record" },
 ]
 
 export const metricsNote =
@@ -266,13 +287,6 @@ export const experience = {
         "Guest safety, executive protection, and incident command, including VIP operations coordinated with U.S. Secret Service details.",
     },
   ] satisfies Role[],
-}
-
-/** Small, deliberately minor. The hiring narrative is systems, technology,
- *  infrastructure, data, transformation — this is not a second About. */
-export const beyondTheWork = {
-  label: "Beyond the work",
-  text: "Ten years as opposing force at the Direct Action Resource Center, running force-on-force against military special operations and law enforcement tactical teams. I have personally run the attack path security designs are meant to stop.",
 }
 
 export const contact = {

@@ -1,9 +1,10 @@
-import { hero, person } from "../content/site"
+import { about, hero, person } from "../content/site"
 import { DownloadIcon } from "./icons"
 
 /* The thesis as architecture: physical estate at the bottom, signal rising
    through sensors, data, and systems to intelligence and AI. Gray is the
-   infrastructure. Amber is the signal moving through it. */
+   infrastructure. Amber is the signal moving through it. Sits under the
+   headline now, not beside it — the identity column took that slot. */
 
 const SENSOR_X = [130, 172, 214, 256, 298, 340, 382, 424, 466, 508]
 const SYSTEMS = [
@@ -22,7 +23,7 @@ const ROWS = [
 
 function HeroSignal() {
   return (
-    <div className="mx-auto w-full max-w-[34rem]" data-progress>
+    <div className="w-full max-w-[26rem]" data-progress>
       <svg viewBox="0 0 520 420" className="sx block h-auto w-full" role="img" aria-label="Signal rising from physical sensors through data and systems to intelligence and AI">
         {ROWS.map((r) => (
           <text key={r.label} x={0} y={r.y + 3} className={r.on ? "sx-m-on" : "sx-m"}>
@@ -85,8 +86,8 @@ function HeroSignal() {
 export function Hero() {
   return (
     <section id="top" className="relative pt-28 pb-16 sm:pt-36 lg:pt-40 lg:pb-24" aria-labelledby="hero-title">
-      <div className="wrap grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
-        <div className="lg:col-span-7" data-reveal>
+      <div className="wrap grid gap-14 lg:grid-cols-[1.86fr_1fr] lg:items-start lg:gap-16">
+        <div data-reveal>
           <p className="t-meta sec-label">{hero.eyebrow}</p>
           <h1 id="hero-title" className="t-display mt-7">
             {hero.headline}
@@ -106,9 +107,36 @@ export function Hero() {
               <li key={f}>{f}</li>
             ))}
           </ul>
+
+          <div className="mt-16" data-reveal style={{ ["--d" as string]: "150ms" }}>
+            <HeroSignal />
+          </div>
         </div>
-        <div className="lg:col-span-5" data-reveal style={{ ["--d" as string]: "150ms" }}>
-          <HeroSignal />
+
+        {/* Identity, not a second hero: no panel background, just a subtle
+            rule tying it back to the hero's own grid. */}
+        <div
+          className="lg:border-l lg:border-line lg:pl-12"
+          data-reveal
+          style={{ ["--d" as string]: "80ms" }}
+        >
+          <picture>
+            <source srcSet="/headshot.webp" type="image/webp" />
+            <img
+              src="/headshot.jpg"
+              alt={person.name}
+              width={220}
+              height={264}
+              loading="eager"
+              decoding="async"
+              className="block h-auto w-[11rem] rounded-[3px] border border-line object-cover sm:w-[13rem]"
+            />
+          </picture>
+          <p className="mt-6 text-[1.15rem] font-medium tracking-tight text-ink">{about.name}</p>
+          <p className="mt-1 text-[0.92rem] text-ink-2">{about.title}</p>
+          <p className="t-body mt-5 max-w-xs text-[0.95rem] leading-relaxed">{about.positioning}</p>
+          <span className="mt-6 block h-px w-8 bg-signal" aria-hidden="true" />
+          <p className="t-body mt-6 max-w-xs text-[0.95rem] leading-relaxed text-ink-2">{about.pattern}</p>
         </div>
       </div>
     </section>

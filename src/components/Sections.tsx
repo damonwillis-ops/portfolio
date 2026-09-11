@@ -1,15 +1,15 @@
 import type { CSSProperties } from "react"
 import { Rich } from "../lib/rich"
 import {
-  about,
+  aboutSection,
   aiReady,
-  beyondTheWork,
   capabilities,
   contact,
   experience,
   method,
-  metrics,
   metricsNote,
+  metricsPrimary,
+  metricsSecondary,
   person,
   principles,
   thesis,
@@ -24,13 +24,10 @@ export function Metrics() {
     <section aria-label="Scale" className="border-y border-line bg-bg-2">
       <div className="wrap py-14 lg:py-20" data-reveal>
         <p className="t-meta sec-label">The evidence</p>
-        <ul className="mt-10 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-6">
-          {metrics.map((m, i) => (
-            <li
-              key={m.label}
-              className={`sigline border-t border-line pt-6 ${i < 3 ? "lg:col-span-2" : "lg:col-span-3"}`}
-              style={{ "--rest": 0.1 } as Vars}
-            >
+
+        <ul className="mt-10 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-3">
+          {metricsPrimary.map((m) => (
+            <li key={m.label} className="sigline border-t border-line pt-6" style={{ "--rest": 0.1 } as Vars}>
               <span className="t-metric block" data-count={m.value} aria-hidden="true">
                 {m.value}
               </span>
@@ -39,6 +36,20 @@ export function Metrics() {
             </li>
           ))}
         </ul>
+
+        <ul className="mt-10 grid grid-cols-1 gap-x-10 gap-y-8 border-t border-line pt-10 sm:grid-cols-2 lg:grid-cols-4">
+          {metricsSecondary.map((m) => (
+            <li key={m.label} style={{ "--rest": 0.15 } as Vars}>
+              <span className="t-stat block" data-count={m.value} aria-hidden="true">
+                {m.value}
+              </span>
+              <span className="sr-only">{m.value}</span>
+              <span className="mt-2.5 block text-[0.88rem] leading-snug text-ink-2">{m.label}</span>
+              {m.note && <span className="t-caption mt-1 block">{m.note}</span>}
+            </li>
+          ))}
+        </ul>
+
         <p className="t-caption mt-12 max-w-2xl">{metricsNote}</p>
       </div>
     </section>
@@ -239,37 +250,21 @@ export function Experience() {
   )
 }
 
-/** Compact, directly under the hero. Who Damon is, in one screen, before the
- *  work. The long biography does not live here — see BeyondTheWork. */
+/** The real About section: nav "About" points here, not at the hero's
+ *  identity column. Adds the credentials and the one piece of personal
+ *  material worth keeping, rather than repeating name/title/positioning. */
 export function About() {
   return (
-    <section className="border-y border-line bg-bg-2" id="about" aria-labelledby="about-title">
-      <div className="wrap py-14 lg:py-18">
-        <div className="grid gap-8 sm:grid-cols-[10rem_1fr] lg:grid-cols-[12rem_1fr] lg:gap-14">
-          <div className="max-w-[10rem] sm:max-w-none" data-reveal>
-            <picture>
-              <source srcSet="/headshot.webp" type="image/webp" />
-              <img
-                src="/headshot.jpg"
-                alt="Damon Willis"
-                width={480}
-                height={480}
-                loading="eager"
-                decoding="async"
-                className="block h-auto w-full rounded-[3px] border border-line"
-              />
-            </picture>
-          </div>
-          <div data-reveal>
-            <p className="t-meta sec-label">{about.label}</p>
-            <h2 id="about-title" className="t-h1 mt-3">
-              {about.name}
-            </h2>
-            <p className="mt-1.5 text-[1.05rem] text-ink-2">{about.title}</p>
-            <p className="t-body mt-6 max-w-2xl">{about.positioning}</p>
-            <p className="t-body mt-4 max-w-2xl text-ink">{about.pattern}</p>
-            <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2">
-              {about.credentials.map((c) => (
+    <section className="sec" id="about" aria-labelledby="about-title">
+      <div className="wrap">
+        <SectionHead id="about-title" label={aboutSection.label} title={aboutSection.title} />
+        <div className="mt-12 grid lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-9 lg:col-start-4">
+            <p className="t-body max-w-2xl" data-reveal>
+              {aboutSection.bio}
+            </p>
+            <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2" data-reveal>
+              {aboutSection.credentials.map((c) => (
                 <li key={c} className="t-meta">
                   {c}
                 </li>
@@ -277,20 +272,6 @@ export function About() {
             </ul>
           </div>
         </div>
-      </div>
-    </section>
-  )
-}
-
-/** Very small, deliberately minor — see content/site.ts for why. */
-export function BeyondTheWork() {
-  return (
-    <section className="wrap py-10" aria-labelledby="beyond-title">
-      <div className="sigline border-t border-line pt-6" data-reveal>
-        <p id="beyond-title" className="t-meta sec-label">
-          {beyondTheWork.label}
-        </p>
-        <p className="t-body mt-3 max-w-2xl text-[0.95rem] leading-relaxed text-ink-2">{beyondTheWork.text}</p>
       </div>
     </section>
   )

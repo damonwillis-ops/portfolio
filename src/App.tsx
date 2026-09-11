@@ -6,7 +6,6 @@ import { CaseStudies, SelectedWork } from "./components/Work"
 import {
   About,
   AIReady,
-  BeyondTheWork,
   Capabilities,
   Contact,
   Experience,
@@ -17,13 +16,15 @@ import {
 } from "./components/Sections"
 import { Footer } from "./components/Footer"
 
-// Narrative order (revised 2026-09-11 to cut scroll ~30%): who (hero) → who
-// he is (About, moved up here so the visitor meets Damon before several
-// thousand words about his work) → scale (metrics) → the thesis → what he
-// did (case studies, then selected systems) → how he thinks (method, the AI
-// bridge, capabilities, principles) → the record → a small personal note →
-// the ask. The two wrapper ids exist so the nav's Work / How I Think items
-// stay lit across every section they cover.
+// Narrative order (revised 2026-09-11 for the hero/identity refinement):
+// hero + identity as one integrated two-column system (who he is lives in
+// the hero now, not a separate section) -> the evidence -> the thesis ->
+// what he did (case studies, then selected systems) -> how he thinks
+// (method, the AI bridge, capabilities, principles) -> the record -> the
+// person, in more depth than the hero's identity column gave (About, real
+// bio + credentials, right before the ask) -> the ask. The two wrapper ids
+// exist so the nav's Work / How I Think items stay lit across every section
+// they cover.
 
 function App() {
   useEffect(() => initMotion(), [])
@@ -39,7 +40,6 @@ function App() {
       <Nav />
       <main id="main">
         <Hero />
-        <About />
         <Metrics />
         <Thesis />
         <div id="work">
@@ -53,7 +53,7 @@ function App() {
           <Principles />
         </div>
         <Experience />
-        <BeyondTheWork />
+        <About />
         <Contact />
       </main>
       <Footer />
