@@ -1,5 +1,5 @@
 import { about, hero, person } from "../content/site"
-import { DownloadIcon } from "./icons"
+import { ArrowIcon, DownloadIcon, ExternalIcon, MailIcon } from "./icons"
 
 export function Hero() {
   return (
@@ -12,24 +12,27 @@ export function Hero() {
               {hero.headline}
             </h1>
             <p className="t-lead mt-7 max-w-2xl">{hero.sub}</p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <a href="#work" className="btn btn-solid">
+            {/* One action row, one component. Solid = the single primary
+                action; everything else is the same outlined secondary, each
+                with a trailing glyph so the four read as a set. */}
+            <div className="mt-10 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
+              <a href="#work" className="btn btn-solid col-span-2 justify-center sm:col-auto">
                 See the work
+                <ArrowIcon />
               </a>
-              <a href={person.resume} download className="btn">
+              <a href={person.resume} download className="btn col-span-2 justify-center sm:col-auto">
                 Download resume
                 <DownloadIcon />
               </a>
-            </div>
-            <p className="t-caption mt-4">
-              <a href={`mailto:${person.email}`} className="lnk">
-                {person.email}
+              <a href={`mailto:${person.email}`} className="btn justify-center" aria-label={`Email ${person.email}`}>
+                Email
+                <MailIcon />
               </a>
-              <span className="mx-3 text-line-2">/</span>
-              <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="lnk">
+              <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="btn justify-center">
                 LinkedIn
+                <ExternalIcon />
               </a>
-            </p>
+            </div>
             <ul className="t-meta mt-10 flex flex-wrap gap-x-5 gap-y-2" aria-label="At a glance">
               {hero.facts.map((f) => (
                 <li key={f}>{f}</li>
