@@ -285,6 +285,104 @@ p { text-wrap: pretty; }
   }
   .explore[open] > .explore-summary .explore-mark { transform: rotate(45deg); }
 
+  /* ---------- zoom: diagram lightbox ---------- */
+  .zoom-thumb {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0.9rem;
+    border: 1px solid var(--color-line);
+    border-radius: 3px;
+    background: var(--color-bg);
+    text-align: left;
+    cursor: zoom-in;
+    transition: border-color 0.2s var(--ease-signal);
+  }
+  .zoom-thumb:hover,
+  .zoom-thumb:focus-visible {
+    border-color: var(--color-line-2);
+  }
+  .zoom-thumb:focus-visible {
+    outline: 1px solid var(--color-signal);
+    outline-offset: 2px;
+  }
+  .zoom-thumb > :first-child {
+    transition: transform 0.3s var(--ease-signal);
+  }
+  .zoom-thumb:hover > :first-child,
+  .zoom-thumb:focus-visible > :first-child {
+    transform: scale(1.01);
+  }
+  /* Footer row under the thumbnail, so it never sits over diagram content. */
+  .zoom-expand {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.75rem;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    transition: color 0.2s var(--ease-signal);
+  }
+  .zoom-thumb:hover .zoom-expand,
+  .zoom-thumb:focus-visible .zoom-expand {
+    color: var(--color-signal);
+  }
+
+  .zoom-dialog {
+    width: min(94vw, 72rem);
+    max-height: 90vh;
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid var(--color-line-2);
+    border-radius: 4px;
+    background: var(--color-bg-2);
+    color: var(--color-ink);
+  }
+  .zoom-dialog::backdrop {
+    background: rgb(8 9 11 / 0.82);
+  }
+  @starting-style {
+    .zoom-dialog[open] {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    .zoom-dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+  .zoom-dialog[open] {
+    opacity: 1;
+    transform: scale(1);
+    transition:
+      opacity 0.28s var(--ease-signal),
+      transform 0.28s var(--ease-signal),
+      display 0.28s allow-discrete,
+      overlay 0.28s allow-discrete;
+  }
+  .zoom-dialog[open]::backdrop {
+    opacity: 1;
+    transition: opacity 0.28s var(--ease-signal);
+  }
+
+  html:has(.zoom-dialog[open]) {
+    overflow: hidden;
+  }
+
+  /* Diagrams mount inside the dialog after initMotion already ran its
+     one-time scan, so they're never picked up by the scroll/inview
+     observers. Force the lit, in-view state by hand. */
+  .zoom-dialog [data-progress] { --p: 1; }
+  .zoom-dialog [data-reveal] { opacity: 1; transform: none; }
+  .zoom-dialog .sx-pulse {
+    animation: sx-travel var(--dur, 7s) linear infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
   /* ---------- case accordion ----------
      A row's panel is always in the DOM (prerendered, crawlable) and is
      shown/hidden purely by CSS keyed off the header button's aria-expanded,
@@ -645,6 +743,10 @@ p { text-wrap: pretty; }
   .js .sx-draw { stroke-dasharray: none; stroke-dashoffset: 0; animation: none !important; }
   .sigline::before, .m-step::before, .flow-seg::after { transition: none; }
   .case-panel-wrap, .case-rail, .case-chevron { transition: none; }
+  .zoom-thumb > :first-child { transition: none; }
+  .zoom-thumb:hover > :first-child, .zoom-thumb:focus-visible > :first-child { transform: none; }
+  .zoom-dialog, .zoom-dialog[open] { transition: none; }
+  .zoom-dialog[open], .zoom-dialog[open]::backdrop { opacity: 1; transform: none; }
 }
 
 @media print {
@@ -656,4 +758,6 @@ p { text-wrap: pretty; }
   .explore-body { display: block !important; }
   .case-panel-wrap { grid-template-rows: 1fr !important; }
   .case-chevron { display: none !important; }
+  .zoom-expand { display: none !important; }
+  .zoom-dialog { display: none !important; }
 }

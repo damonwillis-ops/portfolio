@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { caseStudies, workIntro, type Block, type CaseStudy } from "../content/caseStudies"
 import { selectedWork, workNote, type WorkDiagram } from "../content/work"
 import { Rich } from "../lib/rich"
-import { BeforeAfter, Explore, Flow, SectionHead, StatGrid } from "./ui"
+import { BeforeAfter, Explore, Flow, SectionHead, StatGrid, Zoom } from "./ui"
 import { AssetRecord, EvalLoop, Lineage, PackageLibrary, StandardCard, SystemMap, ValidationGate } from "./diagrams"
 
 function Subhead({ children }: { children: string }) {
@@ -288,7 +288,9 @@ export function SelectedWork() {
                 {(w.detail.length > 0 || w.diagram) && (
                   <Explore label="Explore" gap="space-y-6">
                     <figure>
-                      <D />
+                      <Zoom title={w.title} kicker={w.kicker}>
+                        <D />
+                      </Zoom>
                     </figure>
                     {w.detail.length > 0 && (
                       <ul className="space-y-3">

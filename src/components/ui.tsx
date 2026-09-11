@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react"
+import { createContext, useContext, useId, useRef, useState, type CSSProperties, type ReactNode } from "react"
 import { Rich } from "../lib/rich"
 import type { Metric } from "../content/site"
 import type { Step } from "../content/caseStudies"
@@ -172,12 +172,86 @@ export function Explore({
   )
 }
 
+/** True inside a Zoom thumbnail: Wide drops its scroll wrapper and min-width
+ *  so the diagram scales down to fit instead of clipping with a scrollbar. */
+export const FitContext = createContext(false)
+
 /** Horizontal scroll container for wide schematics. The figure scrolls on a
- *  phone; the page never does. */
+ *  phone; the page never does. Inside a Zoom thumbnail (FitContext), it
+ *  renders children plain so the SVG's own viewBox scales it to fit. */
 export function Wide({ children, min = 640 }: { children: ReactNode; min?: number }) {
+  const fit = useContext(FitContext)
+  if (fit) return <>{children}</>
   return (
     <div className="-mx-1 overflow-x-auto px-1 pb-2">
       <div style={{ minWidth: `${min}px` }}>{children}</div>
     </div>
+  )
+}
+
+/** A diagram thumbnail that opens full size in a lightbox. The thumbnail
+ *  renders the whole diagram scaled to the card (via FitContext); the
+ *  dialog renders it normally, so Wide schematics keep their native
+ *  scroll-on-phone behavior at full size. */
+export function Zoom({ title, kicker, children }: { title: string; kicker?: string; children: ReactNode }) {
+  const [open, setOpen] = useState(false)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const titleId = useId()
+
+  function close() {
+    dialogRef.current?.close()
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        ref={triggerRef}
+        className="zoom-thumb"
+        onClick={() => {
+          setOpen(true)
+          dialogRef.current?.showModal()
+        }}
+        aria-label={`Expand diagram: ${title}`}
+      >
+        <FitContext.Provider value={true}>{children}</FitContext.Provider>
+        <span className="zoom-expand" aria-hidden="true">
+          Expand
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
+            <path d="M7 1 H11 V5 M11 1 L7 5 M5 11 H1 V7 M1 11 L5 7" />
+          </svg>
+        </span>
+      </button>
+      <dialog
+        ref={dialogRef}
+        className="zoom-dialog"
+        aria-labelledby={titleId}
+        onClose={() => {
+          setOpen(false)
+          triggerRef.current?.focus()
+        }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) close()
+        }}
+      >
+        {open && (
+          <>
+            <div className="flex items-center justify-between gap-4 border-b border-line px-6 py-4">
+              <div>
+                {kicker && <p className="t-meta">{kicker}</p>}
+                <h3 id={titleId} className="t-h3 text-ink">
+                  {title}
+                </h3>
+              </div>
+              <button type="button" className="btn flex-none" onClick={close} aria-label="Close diagram">
+                Close <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="p-6 sm:p-10">{children}</div>
+          </>
+        )}
+      </dialog>
+    </>
   )
 }
