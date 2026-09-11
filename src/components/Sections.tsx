@@ -3,6 +3,7 @@ import { Rich } from "../lib/rich"
 import {
   about,
   aiReady,
+  beyondTheWork,
   capabilities,
   contact,
   experience,
@@ -123,45 +124,13 @@ export function AIReady() {
     <section className="sec" id="ai-ready" aria-labelledby="ai-title">
       <div className="wrap">
         <SectionHead id="ai-title" label={aiReady.label} title={aiReady.title} />
-        <div className="mt-12 grid lg:grid-cols-12 lg:gap-10">
-          <ol className="lg:col-span-9 lg:col-start-4" data-reveal>
-            {aiReady.ladder.map((l, i) => (
-              <li
-                key={l}
-                className="py-1.5 text-[1.2rem] leading-snug font-medium tracking-tight text-ink lg:text-[1.45rem]"
-                style={{ paddingLeft: `min(${i * 1.6}rem, ${i * 5}vw)` }}
-              >
-                {l}
-              </li>
-            ))}
-          </ol>
-        </div>
-        <div className="mt-16" data-reveal>
+        <div className="mt-14" data-reveal>
           <Flow steps={aiReady.chain} label="From the physical world to AI" />
         </div>
-        <div className="mt-16 grid lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-9 lg:col-start-4">
-            <p className="t-meta" data-reveal>
-              {aiReady.whereLabel}
-            </p>
-            <dl className="mt-5">
-              {aiReady.where.map((w) => (
-                <div
-                  key={w.span}
-                  className="sigline grid gap-2 border-t border-line py-5 sm:grid-cols-[13rem_1fr] sm:gap-8"
-                  data-reveal
-                >
-                  <dt className="t-meta pt-1">{w.span}</dt>
-                  <dd className="t-body">
-                    <Rich text={w.text} />
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <p className="mt-12 max-w-3xl text-[1.15rem] leading-relaxed text-ink lg:text-[1.25rem]" data-reveal>
-              {aiReady.close}
-            </p>
-          </div>
+        <div className="mt-14 grid lg:grid-cols-12 lg:gap-10">
+          <p className="lg:col-span-9 lg:col-start-4 max-w-3xl text-[1.15rem] leading-relaxed text-ink lg:text-[1.25rem]" data-reveal>
+            {aiReady.close}
+          </p>
         </div>
       </div>
     </section>
@@ -270,42 +239,58 @@ export function Experience() {
   )
 }
 
+/** Compact, directly under the hero. Who Damon is, in one screen, before the
+ *  work. The long biography does not live here — see BeyondTheWork. */
 export function About() {
   return (
-    <section className="sec" id="about" aria-labelledby="about-title">
-      <div className="wrap">
-        <SectionHead id="about-title" label={about.label} title={about.title} />
-        <div className="mt-14 grid gap-10 lg:grid-cols-12">
-          <div className="max-w-[18rem] lg:col-span-3 lg:col-start-4 lg:max-w-none" data-reveal>
+    <section className="border-y border-line bg-bg-2" id="about" aria-labelledby="about-title">
+      <div className="wrap py-14 lg:py-18">
+        <div className="grid gap-8 sm:grid-cols-[10rem_1fr] lg:grid-cols-[12rem_1fr] lg:gap-14">
+          <div className="max-w-[10rem] sm:max-w-none" data-reveal>
             <picture>
               <source srcSet="/headshot.webp" type="image/webp" />
               <img
                 src="/headshot.jpg"
                 alt="Damon Willis"
-                width={560}
-                height={560}
-                loading="lazy"
+                width={480}
+                height={480}
+                loading="eager"
                 decoding="async"
                 className="block h-auto w-full rounded-[3px] border border-line"
               />
             </picture>
           </div>
-          <div className="lg:col-span-6" data-reveal>
-            <div className="t-body space-y-5">
-              {about.paras.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
-            <ul className="mt-10">
+          <div data-reveal>
+            <p className="t-meta sec-label">{about.label}</p>
+            <h2 id="about-title" className="t-h1 mt-3">
+              {about.name}
+            </h2>
+            <p className="mt-1.5 text-[1.05rem] text-ink-2">{about.title}</p>
+            <p className="t-body mt-6 max-w-2xl">{about.positioning}</p>
+            <p className="t-body mt-4 max-w-2xl text-ink">{about.pattern}</p>
+            <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2">
               {about.credentials.map((c) => (
-                <li key={c} className="flex items-baseline gap-3 border-t border-line py-3 text-[0.95rem] text-ink">
-                  <span className="h-1 w-1 flex-none translate-y-[-0.2em] bg-ink-3" aria-hidden="true" />
+                <li key={c} className="t-meta">
                   {c}
                 </li>
               ))}
             </ul>
           </div>
         </div>
+      </div>
+    </section>
+  )
+}
+
+/** Very small, deliberately minor — see content/site.ts for why. */
+export function BeyondTheWork() {
+  return (
+    <section className="wrap py-10" aria-labelledby="beyond-title">
+      <div className="sigline border-t border-line pt-6" data-reveal>
+        <p id="beyond-title" className="t-meta sec-label">
+          {beyondTheWork.label}
+        </p>
+        <p className="t-body mt-3 max-w-2xl text-[0.95rem] leading-relaxed text-ink-2">{beyondTheWork.text}</p>
       </div>
     </section>
   )

@@ -1,7 +1,7 @@
 import { caseStudies, workIntro, type Block, type CaseStudy } from "../content/caseStudies"
 import { selectedWork, workNote, type WorkDiagram } from "../content/work"
 import { Rich } from "../lib/rich"
-import { BeforeAfter, Flow, SectionHead, StatGrid } from "./ui"
+import { BeforeAfter, Explore, Flow, SectionHead, StatGrid } from "./ui"
 import { AssetRecord, EvalLoop, Lineage, PackageLibrary, StandardCard, SystemMap, ValidationGate } from "./diagrams"
 import { ArrowIcon } from "./icons"
 
@@ -132,33 +132,63 @@ function CaseArticle({ cs, total }: { cs: CaseStudy; total: number }) {
           <p className="t-lead mt-6 max-w-3xl" data-reveal>
             {cs.dek}
           </p>
-          {cs.lead && (
-            <div className="sigline mt-14 border-t border-line pt-8" data-reveal>
-              <span
-                className="t-metric block text-[clamp(3.4rem,1.6rem+7.5vw,7.5rem)]"
-                data-count={cs.lead.value}
-                aria-hidden="true"
-              >
-                {cs.lead.value}
-              </span>
-              <span className="sr-only">{cs.lead.value}</span>
-              <span className="mt-4 block max-w-md text-[1.05rem] text-ink-2">{cs.lead.label}</span>
+
+          <div className="mt-14 grid gap-10 lg:grid-cols-2" data-reveal>
+            <div>
+              <p className="t-meta sec-label">The problem</p>
+              <p className="t-body mt-4 max-w-xl leading-relaxed">
+                <Rich text={cs.problem} />
+              </p>
             </div>
-          )}
-          {cs.stats && (
-            <div className="mt-14">
-              <StatGrid items={cs.stats} cols={cs.stats.length % 3 === 0 ? 3 : 4} />
+            <div>
+              <p className="t-meta sec-label">The system</p>
+              <ul className="mt-4 space-y-3">
+                {cs.system.map((s) => (
+                  <li key={s} className="t-body flex gap-3 text-[0.98rem] leading-relaxed">
+                    <span className="mt-[0.6em] h-1 w-1 flex-none bg-ink-3" aria-hidden="true" />
+                    <span>
+                      <Rich text={s} />
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          )}
-          <div className="mt-16 space-y-20">
-            {cs.blocks.map((b, i) => (
-              <BlockView key={i} b={b} />
-            ))}
           </div>
-          <div className="mt-20 border-t border-line pt-8" data-reveal>
+
+          <div className="mt-14">
+            <p className="t-meta sec-label" data-reveal>
+              The scale
+            </p>
+            <div className="mt-6">
+              <StatGrid items={cs.scale} cols={cs.scale.length % 3 === 0 ? 3 : 4} />
+            </div>
+          </div>
+
+          <div className="mt-14 grid lg:grid-cols-12 lg:gap-10" data-reveal>
+            <div className="lg:col-span-9">
+              <p className="t-meta sec-label">The result</p>
+              <ul className="mt-4 space-y-2.5">
+                {cs.result.map((r) => (
+                  <li key={r} className="text-[1.05rem] leading-snug text-ink">
+                    <Rich text={r} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-14 border-t border-line pt-8" data-reveal>
             <p className="t-meta sec-label">Takeaway</p>
             <p className="t-h2 mt-5 max-w-3xl text-ink">{cs.takeaway}</p>
           </div>
+
+          {cs.detail.length > 0 && (
+            <Explore>
+              {cs.detail.map((b, i) => (
+                <BlockView key={i} b={b} />
+              ))}
+            </Explore>
+          )}
         </div>
       </div>
     </article>
@@ -206,50 +236,60 @@ export function CaseStudies() {
 
 const DIAGRAMS: Record<WorkDiagram, () => React.JSX.Element> = {
   "validation-gate": ValidationGate,
-  lineage: Lineage,
   "eval-loop": EvalLoop,
   "standard-card": StandardCard,
   "package-library": PackageLibrary,
+  lineage: Lineage,
 }
 
 export function SelectedWork() {
   return (
     <section className="sec" id="selected-work" aria-labelledby="sw-title">
       <div className="wrap">
-        <SectionHead id="sw-title" label="Selected work" title="Show the build, not the pitch." lead={workNote} />
-        {selectedWork.map((w) => {
-          const D = DIAGRAMS[w.diagram]
-          return (
-            <article
-              key={w.id}
-              className="mt-16 grid gap-10 border-t border-line pt-10 lg:grid-cols-12"
-              aria-labelledby={`${w.id}-title`}
-            >
-              <div className="lg:col-span-4" data-reveal>
+        <SectionHead id="sw-title" label="Selected systems" title="Show the build, not the pitch." lead={workNote} />
+        <div className="mt-14 grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+          {selectedWork.map((w) => {
+            const D = DIAGRAMS[w.diagram]
+            return (
+              <article
+                key={w.id}
+                className="sigline border-t border-line pt-6"
+                aria-labelledby={`${w.id}-title`}
+                data-reveal
+              >
                 <p className="t-meta">{w.kicker}</p>
                 <h3 id={`${w.id}-title`} className="t-h2 mt-3 text-ink">
                   {w.title}
                 </h3>
-                <p className="t-body mt-4 text-[0.98rem] leading-relaxed">
-                  <Rich text={w.body} />
+                <p className="t-body mt-4 text-[0.96rem] leading-relaxed">
+                  <Rich text={w.sentence} />
                 </p>
-                <ul className="mt-6 space-y-3">
-                  {w.notes.map((n) => (
-                    <li key={n} className="t-body flex gap-3 text-[0.94rem] leading-relaxed">
-                      <span className="mt-[0.6em] h-1 w-1 flex-none bg-ink-3" aria-hidden="true" />
-                      <span>
-                        <Rich text={n} />
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <figure className="min-w-0 lg:col-span-8 lg:pt-8" data-reveal>
-                <D />
-              </figure>
-            </article>
-          )
-        })}
+                <p className="t-caption mt-4">
+                  <Rich text={w.proof} />
+                </p>
+                {(w.detail.length > 0 || w.diagram) && (
+                  <Explore label="Explore" gap="space-y-6">
+                    <figure>
+                      <D />
+                    </figure>
+                    {w.detail.length > 0 && (
+                      <ul className="space-y-3">
+                        {w.detail.map((n) => (
+                          <li key={n} className="t-body flex gap-3 text-[0.94rem] leading-relaxed">
+                            <span className="mt-[0.6em] h-1 w-1 flex-none bg-ink-3" aria-hidden="true" />
+                            <span>
+                              <Rich text={n} />
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </Explore>
+                )}
+              </article>
+            )
+          })}
+        </div>
       </div>
     </section>
   )

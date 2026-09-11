@@ -139,6 +139,31 @@ export function StatGrid({ items, cols = 4 }: { items: Metric[]; cols?: 2 | 3 | 
   )
 }
 
+/** A single disclosure for supporting detail. Collapsed by default so the
+ *  compact view is the whole story in ~30-45s; the deeper material is one
+ *  click away, not gone. Content stays in the DOM either way, so print
+ *  forces it open (see index.css) and it's never hidden from a screen reader
+ *  that ignores `open`. */
+export function Explore({
+  label = "Explore the detail",
+  gap = "space-y-20",
+  children,
+}: {
+  label?: string
+  gap?: string
+  children: ReactNode
+}) {
+  return (
+    <details className="explore mt-10 border-t border-line pt-6" data-reveal>
+      <summary className="explore-summary">
+        <span className="explore-mark" aria-hidden="true" />
+        {label}
+      </summary>
+      <div className={`explore-body mt-10 ${gap}`}>{children}</div>
+    </details>
+  )
+}
+
 /** Horizontal scroll container for wide schematics. The figure scrolls on a
  *  phone; the page never does. */
 export function Wide({ children, min = 640 }: { children: ReactNode; min?: number }) {

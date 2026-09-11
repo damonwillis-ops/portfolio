@@ -248,6 +248,34 @@ p { text-wrap: pretty; }
     line-height: 1.3;
   }
 
+  /* ---------- explore: collapsed supporting detail ---------- */
+  .explore-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+    list-style: none;
+    transition: color 0.2s var(--ease-signal);
+  }
+  .explore-summary::-webkit-details-marker { display: none; }
+  .explore:hover > .explore-summary,
+  .explore[open] > .explore-summary { color: var(--color-ink); }
+  .explore-mark {
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform 0.2s var(--ease-signal);
+  }
+  .explore[open] > .explore-summary .explore-mark { transform: rotate(45deg); }
+
   /* ---------- flow: scroll-linked signal chain ----------
      --p (0..1) is written by motion.ts as the element crosses the
      viewport. Each step computes its own state from --p, --n, --i:
@@ -583,4 +611,7 @@ p { text-wrap: pretty; }
   html, body { background: #fff; color: #000; }
   .no-print { display: none !important; }
   .js [data-reveal] { opacity: 1; transform: none; }
+  /* Detail stays in the DOM when collapsed; force it visible on paper. */
+  .explore-summary { display: none; }
+  .explore-body { display: block !important; }
 }

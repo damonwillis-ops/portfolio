@@ -7,10 +7,19 @@
 // Standing constraints from the vault that shape this copy:
 // - No internal former-employer platform names. Systems described by function.
 // - No former-employer documents or screenshots. Schematics are redrawn.
-// - No former colleagues named. No separation content. No personal venture.
+// - No former colleagues named. No separation content.
 // - The design-assurance tool is a deterministic rules engine: never AI or CV.
 // - The eval harness gates on F1 when run. Never "enforced in CI."
 // - The data warehouse: drove the requirement, did not build it.
+//
+// 2026-09-11 revision: cut ~30% of vertical scroll. About moved up, right
+// after the hero, compact two-column — the visitor meets Damon before reading
+// several thousand words about his work. Case studies cut from four to three;
+// the fourth (the ROI/adoption story) is folded into case 02, which is where
+// that business case actually happened. Method 9 steps -> 5. AI-Ready and
+// Capabilities compressed. Principles 6 -> 3. This is a content-architecture
+// cut, not a CSS-compression one: no font size, spacing, or component shrank
+// to make room. See decisions/2026-09-11-portfolio-scroll-reduction.md.
 
 export const person = {
   name: "Damon Willis",
@@ -23,10 +32,10 @@ export const person = {
 }
 
 export const nav = [
+  { label: "About", href: "#about" },
   { label: "Work", href: "#work" },
   { label: "How I Think", href: "#how-i-work" },
   { label: "Experience", href: "#experience" },
-  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ]
 
@@ -35,6 +44,24 @@ export const hero = {
   headline: "I build the systems that make physical operations smarter.",
   sub: "Security technology and systems leader transforming complex physical infrastructure into scalable, data-driven, AI-ready operations.",
   facts: ["18 years", "Fortune 1 and Fortune 500 scale", "CPP", "U.S. Coast Guard veteran"],
+}
+
+/** Compact About, directly under the hero. Not the biography — the
+ *  introduction. The tactical/personal material lives in `beyondTheWork`,
+ *  near the bottom, small. */
+export const about = {
+  label: "About",
+  name: "Damon Willis, CPP",
+  title: "Security Technology & Systems Leader",
+  positioning:
+    "I build the systems that turn complex physical infrastructure into usable data, scalable operations, and intelligent systems.",
+  pattern:
+    "The pattern across all of it: I walk into programs that run on drawings, spreadsheets, and memory, and leave them running on data.",
+  credentials: [
+    "ASIS Certified Protection Professional (CPP)",
+    "U.S. Coast Guard veteran",
+    "18 years, Fortune 1 and Fortune 500 scale",
+  ],
 }
 
 export interface Metric {
@@ -90,60 +117,36 @@ export interface MethodStep {
 export const method = {
   label: "How I work",
   title: "How I Work",
-  lead: "An operating method, not a list of traits. Every step below has been done for real, and the line under it is where.",
+  lead: "An operating method, not a list of traits. Every step below has been done for real.",
   steps: [
     {
       num: "01",
       title: "Understand",
-      what: "Understand the actual problem.",
+      what: "Find the actual constraint.",
       proof: "A client asked for more leads. The real constraint was his own bandwidth.",
     },
     {
       num: "02",
-      title: "Map",
-      what: "Map the system, stakeholders, dependencies, and constraints.",
+      title: "Architect",
+      what: "Map the system, people, dependencies, and technology.",
       proof: "Asset Protection, Risk, Realty, Construction, GSOC, Investigations, Claims. One deliverable, seven owners.",
     },
     {
       num: "03",
-      title: "Challenge",
-      what: "Question the existing operating model.",
-      proof: "The process delivered a camera into a ceiling tile and nothing carried forward. That was the process working as designed.",
-    },
-    {
-      num: "04",
-      title: "Prototype",
-      what: "Test the technology in the real environment.",
-      proof: "One reference store before **19** more.",
-    },
-    {
-      num: "05",
-      title: "Build",
-      what: "Develop the business case and implementation model.",
+      title: "Prove",
+      what: "Prototype, test, and build the business case.",
       proof: "**$200** a site, inside remodel budgets that already existed.",
     },
     {
-      num: "06",
-      title: "Align",
-      what: "Bring technical, operational, financial, legal, and executive stakeholders together.",
-      proof: "**5** business functions onto one operating model, none of them reporting to me.",
-    },
-    {
-      num: "07",
+      num: "04",
       title: "Deploy",
-      what: "Move from concept into production.",
+      what: "Align stakeholders and move into production.",
       proof: "A live SOC cutover held at full monitoring coverage when the vendor missed milestones.",
     },
     {
-      num: "08",
-      title: "Measure",
-      what: "Quantify outcomes.",
-      proof: "Benchmarked my own automation against the fastest human, then widened the baseline against myself. Still **45%** time saved per project.",
-    },
-    {
-      num: "09",
+      num: "05",
       title: "Scale",
-      what: "Turn the solution into an enterprise capability.",
+      what: "Measure the outcome and turn it into an enterprise capability.",
       proof: "Proven in a **$60M** logistics portfolio, then scaled across **4,500+** retail sites.",
     },
   ] satisfies MethodStep[],
@@ -152,47 +155,17 @@ export const method = {
 export const aiReady = {
   label: "The bridge",
   title: "AI starts with the infrastructure underneath it.",
-  ladder: [
-    "Physical infrastructure creates data.",
-    "Structured data creates visibility.",
-    "Visibility enables intelligence.",
-    "Intelligence enables automation.",
-    "Automation enables AI.",
-  ],
   chain: [
     { label: "Physical world", sub: "sites, doors, rooms" },
     { label: "Sensors", sub: "cameras, readers, LPR" },
     { label: "Digital records", sub: "one per device" },
     { label: "Integrated data", sub: "system of record" },
-    { label: "Operational intelligence", sub: "coverage, lifecycle" },
+    { label: "Intelligence", sub: "coverage, lifecycle" },
     { label: "Automation", sub: "gates, checks" },
     { label: "AI", sub: "measured, not assumed" },
   ],
-  whereLabel: "Where my work sits on that chain",
-  where: [
-    {
-      span: "Physical world → Sensors",
-      text: "**1,600+** engineered designs a year. Computer vision and license plate recognition deployed in live stores and parking lots.",
-    },
-    {
-      span: "Digital records",
-      text: "The company's first enterprise device mapping program: **450,000+** records a year.",
-    },
-    {
-      span: "Integrated data",
-      text: "Security device data delivered into BigQuery and Power BI. Design standards structured for machine retrieval.",
-    },
-    {
-      span: "Intelligence → Automation",
-      text: "A validation gate on every design package. A multi-agent orchestration engine running over program data.",
-    },
-    {
-      span: "AI",
-      text: "LLM systems built on program data, and the evaluation harness that decides whether a change to one is allowed to ship.",
-    },
-  ],
   close:
-    "Most of my career has been the left side of that chain: the physical systems, the capture, the data model, the standards. It is the part AI projects in physical operations tend to underestimate. When I built on the right side, I built the measurement too. I'm not an AI researcher. I'm the person who makes the physical layer ready for one.",
+    "Most of my career has been the left side of that chain: the physical systems, the capture, the data model, the standards. It is the part AI projects in physical operations tend to underestimate. I'm not an AI researcher. I'm the person who makes the physical layer ready for one.",
 }
 
 export const capabilities = {
@@ -202,51 +175,19 @@ export const capabilities = {
   groups: [
     {
       name: "Physical Infrastructure",
-      items: [
-        "Video surveillance",
-        "Access control",
-        "Intrusion detection",
-        "Life safety",
-        "Public address and in-store radio",
-        "License plate recognition",
-        "Low-voltage network design: IDF/MDF, PoE, pathways, riser diagrams",
-      ],
+      items: ["Video", "Access", "Intrusion", "Life Safety", "LPR"],
     },
     {
       name: "Digital Systems",
-      items: [
-        "Asset and lifecycle management",
-        "Data integration: BigQuery, Power BI",
-        "Digital design and design validation",
-        "Workflow automation",
-        "PSIM: Genetec Security Center",
-        "Enterprise platforms: C·CURE 9000, Avigilon, Lenel, Milestone, SiteOwl",
-      ],
+      items: ["Asset Management", "Data Integration", "Automation", "Digital Design", "PSIM"],
     },
     {
       name: "Intelligence",
-      items: [
-        "Computer vision deployment",
-        "LLM application development",
-        "AI evaluation: precision, recall, F1",
-        "Multi-agent orchestration",
-        "Data analytics",
-        "Operational intelligence",
-      ],
+      items: ["Computer Vision", "LLMs", "AI Evaluation", "Analytics", "Multi-Agent Systems"],
     },
     {
       name: "Enterprise",
-      items: [
-        "Program management",
-        "Capital planning",
-        "Vendor and integrator management",
-        "Business cases",
-        "Procurement and contract negotiation",
-        "Standards and specification authorship",
-        "Construction administration",
-        "Global deployment: U.S., Canada, Mexico, India",
-        "Compliance: PCI DSS Level 1, SOC 1 and 2, NIST 800-53, HIPAA",
-      ],
+      items: ["Program Management", "Capital Planning", "Procurement", "Standards", "Global Deployment"],
     },
   ],
   footnote:
@@ -260,9 +201,6 @@ export const principles = {
     "The sensor isn't the system. The data around the sensor is.",
     "Enterprise scale changes the problem.",
     "The hardest part of transformation isn't the technology. It's the operating model around it.",
-    "A security system should produce intelligence, not just evidence.",
-    "A gate has to be checkable, not probabilistic.",
-    "Honest over complete.",
   ],
 }
 
@@ -288,7 +226,6 @@ export const experience = {
         { label: "Case 01", href: "#walmart-scale" },
         { label: "Case 02", href: "#cad-to-digital" },
         { label: "Case 03", href: "#device-records" },
-        { label: "Case 04", href: "#business-case" },
       ],
     },
     {
@@ -318,8 +255,8 @@ export const experience = {
       title: "Manager, Security Operations Center",
       dates: "Mar 2011 – Jun 2018",
       summary:
-        "Built a 24/7 SOC from nothing for a Fortune 500 telecom, including data center and critical infrastructure coverage. Owned the PSIM lifecycle end to end on Genetec Security Center.",
-      links: [{ label: "Case 04", href: "#business-case" }],
+        "Built a 24/7 SOC from nothing for a Fortune 500 telecom, including data center and critical infrastructure coverage. Owned the PSIM lifecycle end to end on Genetec Security Center, re-platforming to it after the first vendor didn't hold.",
+      links: [{ label: "Case 02", href: "#cad-to-digital" }],
     },
     {
       org: "Peabody Hotel Little Rock",
@@ -331,20 +268,11 @@ export const experience = {
   ] satisfies Role[],
 }
 
-export const about = {
-  label: "About",
-  title: "Physical first. Then the data. Then the intelligence.",
-  paras: [
-    "I'm a security technology and systems leader based in Northwest Arkansas. Eighteen years, from a hotel security floor to a Fortune 1 capital program, with a SOC build, five years inside audit, and a logistics design portfolio in between.",
-    "The pattern across all of it: I walk into programs that run on drawings, spreadsheets, and memory, and leave them running on data. I have sat on the buying side of enterprise platform decisions, run the operations, and built the software the program ran on.",
-    "Outside the job: ten years as opposing force at the Direct Action Resource Center, running force-on-force against military special operations and law enforcement tactical teams. I have personally run the attack path security designs are meant to stop.",
-  ],
-  credentials: [
-    "ASIS Certified Protection Professional (CPP)",
-    "U.S. Coast Guard veteran",
-    "NRA Chief Range Safety Officer and Pistol Instructor",
-    "Arkansas concealed carry instructor, 15 years",
-  ],
+/** Small, deliberately minor. The hiring narrative is systems, technology,
+ *  infrastructure, data, transformation — this is not a second About. */
+export const beyondTheWork = {
+  label: "Beyond the work",
+  text: "Ten years as opposing force at the Direct Action Resource Center, running force-on-force against military special operations and law enforcement tactical teams. I have personally run the attack path security designs are meant to stop.",
 }
 
 export const contact = {
