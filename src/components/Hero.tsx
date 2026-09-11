@@ -1,88 +1,5 @@
-import { about, hero, person, signal } from "../content/site"
+import { about, hero, person } from "../content/site"
 import { DownloadIcon } from "./icons"
-
-/* The thesis as architecture: physical estate at the bottom, signal rising
-   through sensors, data, and systems to intelligence and AI. Gray is the
-   infrastructure. Amber is the signal moving through it. Full-width band
-   under both hero columns, not confined to one — a narrow column-width
-   version left a wide dead strip of empty space beside it. */
-
-const SENSOR_X = [142, 234, 327, 419, 512, 604, 696, 789, 881, 974]
-const SYSTEMS = [
-  { x: 296, label: "ACCESS" },
-  { x: 560, label: "VIDEO" },
-  { x: 824, label: "LIFECYCLE" },
-]
-const ROWS = [
-  { y: 44, label: "AI", on: true },
-  { y: 114, label: "INTELLIGENCE" },
-  { y: 194, label: "SYSTEMS" },
-  { y: 284, label: "DATA" },
-  { y: 370, label: "SENSORS" },
-  { y: 402, label: "PHYSICAL" },
-]
-
-function HeroSignal() {
-  return (
-    <div className="w-full" data-progress>
-      <svg viewBox="0 0 1050 420" className="sx block h-auto w-full" role="img" aria-label="Signal rising from physical sensors through data and systems to intelligence and AI">
-        {ROWS.map((r) => (
-          <text key={r.label} x={0} y={r.y + 3} className={r.on ? "sx-m-on" : "sx-m"}>
-            {r.label}
-          </text>
-        ))}
-
-        {/* physical estate */}
-        <path d="M120 402 H1010" className="sx-line sx-draw" pathLength={1} />
-        {SENSOR_X.map((x) => (
-          <path key={`t${x}`} d={`M${x} 402 V396`} className="sx-line" />
-        ))}
-
-        {/* sensors up to the data bus */}
-        {SENSOR_X.map((x, i) => (
-          <path
-            key={`s${x}`}
-            d={`M${x} 366 V284`}
-            className="sx-line sx-draw"
-            pathLength={1}
-            style={{ ["--delay" as string]: `${0.15 + i * 0.04}s` }}
-          />
-        ))}
-        <path d="M120 284 H1010" className="sx-line sx-draw" pathLength={1} style={{ ["--delay" as string]: "0.5s" }} />
-
-        {/* bus to systems, systems to intelligence, intelligence to AI */}
-        {SYSTEMS.map((s) => (
-          <path key={`b${s.x}`} d={`M${s.x} 284 V209`} className="sx-line sx-draw" pathLength={1} style={{ ["--delay" as string]: "0.7s" }} />
-        ))}
-        <path d="M296 179 V148 H824 V179 M560 148 V179 M560 148 V120" className="sx-line sx-draw" pathLength={1} style={{ ["--delay" as string]: "0.9s" }} />
-        <path d="M560 108 V53" className="sx-line sx-draw" pathLength={1} style={{ ["--delay" as string]: "1.1s" }} />
-
-        {/* the signal: three pulses, staggered, beneath the nodes */}
-        <path d="M234 366 V284 H296 V148 H560 V53" pathLength={100} className="sx-pulse" style={{ ["--delay" as string]: "0.6s", ["--dur" as string]: "7.5s" }} />
-        <path d="M604 366 V284 H560 V53" pathLength={100} className="sx-pulse" style={{ ["--delay" as string]: "3.1s", ["--dur" as string]: "7.5s" }} />
-        <path d="M881 366 V284 H824 V148 H560 V53" pathLength={100} className="sx-pulse" style={{ ["--delay" as string]: "5.6s", ["--dur" as string]: "7.5s" }} />
-
-        {SENSOR_X.map((x) => (
-          <rect key={`n${x}`} x={x - 4} y={362} width={8} height={8} className="sx-node" />
-        ))}
-        {SENSOR_X.map((x) => (
-          <circle key={`j${x}`} cx={x} cy={284} r={2} fill="var(--color-line-2)" />
-        ))}
-        {SYSTEMS.map((s) => (
-          <g key={s.label}>
-            <rect x={s.x - 44} y={179} width={88} height={30} rx={2} className="sx-box" />
-            <text x={s.x} y={198} textAnchor="middle" className="sx-m">
-              {s.label}
-            </text>
-          </g>
-        ))}
-        <circle cx={560} cy={114} r={6} className="sx-node" />
-        <circle cx={560} cy={44} r={9} fill="var(--color-bg)" stroke="var(--color-signal)" strokeWidth={1.25} />
-        <circle cx={560} cy={44} r={3} fill="var(--color-signal)" />
-      </svg>
-    </div>
-  )
-}
 
 export function Hero() {
   return (
@@ -143,16 +60,6 @@ export function Hero() {
                 LinkedIn
               </a>
             </div>
-          </div>
-        </div>
-
-        <div className="mt-20 grid gap-10 lg:mt-24 lg:grid-cols-[1fr_2.3fr] lg:items-center lg:gap-16">
-          <div data-reveal style={{ ["--d" as string]: "150ms" }}>
-            <p className="t-meta sec-label">{signal.eyebrow}</p>
-            <p className="t-h2 mt-5 max-w-xs text-ink">{signal.claim}</p>
-          </div>
-          <div data-reveal style={{ ["--d" as string]: "220ms" }}>
-            <HeroSignal />
           </div>
         </div>
       </div>
