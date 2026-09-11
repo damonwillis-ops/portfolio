@@ -21,6 +21,15 @@ export function Hero() {
                 <DownloadIcon />
               </a>
             </div>
+            <p className="t-caption mt-4">
+              <a href={`mailto:${person.email}`} className="lnk">
+                {person.email}
+              </a>
+              <span className="mx-3 text-line-2">/</span>
+              <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="lnk">
+                LinkedIn
+              </a>
+            </p>
             <ul className="t-meta mt-10 flex flex-wrap gap-x-5 gap-y-2" aria-label="At a glance">
               {hero.facts.map((f) => (
                 <li key={f}>{f}</li>
@@ -52,14 +61,6 @@ export function Hero() {
             <p className="t-body mt-5 max-w-xs text-[0.95rem] leading-relaxed">{about.positioning}</p>
             <span className="mt-6 block h-px w-8 bg-signal" aria-hidden="true" />
             <p className="t-body mt-6 max-w-xs text-[0.95rem] leading-relaxed text-ink-2">{about.pattern}</p>
-            <div className="t-meta mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-6">
-              <a href={`mailto:${person.email}`} className="lnk">
-                {person.email}
-              </a>
-              <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="lnk">
-                LinkedIn
-              </a>
-            </div>
           </div>
         </div>
       </div>
