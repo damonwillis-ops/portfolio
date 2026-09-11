@@ -135,6 +135,14 @@ export function Hero() {
             <p className="t-body mt-5 max-w-xs text-[0.95rem] leading-relaxed">{about.positioning}</p>
             <span className="mt-6 block h-px w-8 bg-signal" aria-hidden="true" />
             <p className="t-body mt-6 max-w-xs text-[0.95rem] leading-relaxed text-ink-2">{about.pattern}</p>
+            <div className="t-meta mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-6">
+              <a href={`mailto:${person.email}`} className="lnk">
+                {person.email}
+              </a>
+              <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="lnk">
+                LinkedIn
+              </a>
+            </div>
           </div>
         </div>
 
