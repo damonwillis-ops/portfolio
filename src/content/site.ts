@@ -46,8 +46,8 @@ export const nav = [
 
 export const hero = {
   eyebrow: "Security Technology & Systems",
-  headline: "I build the systems that make physical operations smarter.",
-  sub: "Security technology and systems leader transforming complex physical infrastructure into scalable, data-driven, AI-ready operations.",
+  headline: "I bring clarity to uncertainty.",
+  sub: "Through data, systems, and physical security you can trust. High-integrity, high-availability data at enterprise scale.",
   facts: ["18 years", "Fortune 1 and Fortune 500 scale", "CPP", "U.S. Coast Guard veteran"],
 }
 
