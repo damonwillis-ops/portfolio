@@ -33,10 +33,10 @@ export interface CaseStudy {
   title: string
   dek: string
   role?: string
+  key: Metric
   problem: string
   system: string[]
   scale: Metric[]
-  result: string[]
   takeaway: string
   detail: Block[]
 }
@@ -55,28 +55,20 @@ export const caseStudies: CaseStudy[] = [
     title: "Transforming Security at Walmart Scale",
     dek: "The job was never just designing cameras. It was running a security design program inside a system where no single team owned the whole problem.",
     role: "Walmart · Senior Manager, Global Security Strategy & Innovation · 2024–2026",
+    key: { value: "4,600+", label: "Locations" },
     problem:
-      "Designing a camera layout was the easy part. Getting the right system into **800+** stores a year meant holding standards, capital, equipment, labor, integrators, construction schedules, and lifecycle at once, and none of it belonged to one team. Asset Protection, Risk, Realty, Construction, GSOC, Investigations, and Claims all had a claim on the design.",
+      "Designing a camera layout was the easy part. Getting the right system into every remodeled store, every year meant holding standards, capital, equipment, labor, integrators, construction schedules, and lifecycle at once, and none of it belonged to one team. Asset Protection, Risk, Realty, Construction, GSOC, Investigations, and Claims all had a claim on the design.",
     system: [
       "Standards and a modular design library: SOPs and a Basis of Design vendors were contractually bound to, decomposed into cost-coded scope packages by store prototype.",
       "The quality gate: primary QA/QC and design authority over architects of record and outside vendors, on every package.",
       "Construction administration: RFIs, submittal review, as-builts, and closeout walks, on every project, not selectively.",
       "One standard, four countries: took the program into Canada, Mexico, and India forward-only, no remediation of divergent estates.",
-      "Computer vision and LPR, pilot to pattern: a hazard-detection reference store followed by **19** more, plus an enterprise LPR program supporting Amber Alert response.",
+      "Computer vision and LPR, pilot to pattern: a hazard-detection reference store that became the pattern for the next nineteen, plus an enterprise LPR program supporting Amber Alert response.",
     ],
     scale: [
-      { value: "$327M", label: "Physical security capital program" },
-      { value: "1,600+", label: "Engineered designs a year" },
-      { value: "800+", label: "Remodel projects a year" },
-      { value: "4,600+", label: "Locations" },
       { value: "3", label: "Internal team members" },
       { value: "7", label: "Embedded team members" },
       { value: "4", label: "Countries: U.S., Canada, Mexico, India" },
-    ],
-    result: [
-      "One installation package a crew could build from, without calling the designer.",
-      "A single global standard operating across four countries, not four divergent ones.",
-      "A computer-vision reference pattern replicated to 19 more stores.",
     ],
     takeaway: "I do my best work inside complex systems where no single team owns the whole problem.",
     detail: [
@@ -112,27 +104,20 @@ export const caseStudies: CaseStudy[] = [
     title: "From CAD to Digital Security Infrastructure",
     dek: "The important accomplishment wasn't implementing a platform. It was changing the operating system of the organization around security design, and proving the enterprise would pay for it.",
     role: "J.B. Hunt, then Walmart · 2023–2026",
+    key: { value: "$200K–$400K", label: "Lost every quarter, before" },
     problem:
-      "Designs arrived as AutoCAD drawings and PDFs. Everything the design knew, which devices, what make and model, where each one went, was locked inside the file, and it stayed there at handoff. **0%** of site data carried between project phases, roughly **400** active projects moved with no audit trail, and the enterprise lost **$200K–$400K** a quarter to rework and resurveys.",
+      "Designs arrived as AutoCAD drawings and PDFs. Everything the design knew, which devices, what make and model, where each one went, was locked inside the file, and it stayed there at handoff. Nothing carried between project phases, active projects moved with no audit trail, and rework and resurveys ate the budget every quarter.",
     system: [
-      "Proved small first: took a lifecycle and asset management platform from zero to full deployment inside a **$60M**, **150**-project portfolio at J.B. Hunt.",
-      "Then enterprise-wide: proposed and drove the platform as the system of record across **4,500+** locations, aligning five business functions to one operating model.",
+      "Proved small first: took a lifecycle and asset management platform from zero to full deployment inside a J.B. Hunt logistics portfolio.",
+      "Then enterprise-wide: proposed and drove the platform as the system of record for the Fortune 1 estate, aligning five business functions to one operating model.",
       "Full procurement, owned: competitive evaluation, hands-on testing of competing platforms, legal negotiation, and enterprise governance approval, every stage from market scan to signed contract.",
-      "Self-funding by design: **$200** a site, embedded in remodel budgets that already existed. No new capital request, no new headcount.",
+      "Self-funding by design: a per-site cost embedded in remodel budgets that already existed. No new capital request, no new headcount.",
       "A standard that knows itself: rebuilt the Basis of Design from a static document into a queryable, API-readable structure, with every requirement carrying a unique ID.",
     ],
     scale: [
       { value: "0%", label: "Site data retained between phases, before" },
       { value: "~400", label: "Active projects with no audit trail, before" },
-      { value: "$200K–$400K", label: "Lost each quarter to rework, before" },
-      { value: "4,500+", label: "Locations on one system of record, after" },
-      { value: "$800K–$1.6M", label: "Annual savings", note: "approved business case" },
-      { value: "30%", label: "Faster project cycles", note: "approved business case" },
-    ],
-    result: [
-      "4,500+ locations on one system of record, aligned across five business functions.",
-      "$800K–$1.6M a year in savings and 30% faster project cycles, self-funded, no new budget or headcount.",
-      "Design standards structured for API and agent retrieval, not just human reading.",
+      { value: "$200", label: "Per site, inside existing remodel budgets" },
     ],
     takeaway:
       "The platform was the tool. The deliverable was a different way of working, and a business case an enterprise would actually fund.",
@@ -178,24 +163,19 @@ export const caseStudies: CaseStudy[] = [
     title: "Turning Invisible Assets Into Enterprise Data",
     dek: "The devices existed. The records didn't.",
     role: "Walmart · 2024–2026",
+    key: { value: "450,000+", label: "Device records a year" },
     problem:
       "Before this program, nobody had a reliable enterprise-level answer to what devices existed, where they were, what type or manufacturer, what metadata described them, or their lifecycle status.",
     system: [
-      "Launched the company's first enterprise security device mapping program: every device captured as a structured record with images and metadata, **450,000+** a year.",
-      "Validated before it lands: a platform checked every submitted design's metadata against **12** reference tables; below an **80%** pass, the package returned to the designer with each error listed.",
-      "Visible by designer and firm: error rates tracked per designer and per firm across **24** active designers, turning vendor accountability into a number.",
+      "Launched the company's first enterprise security device mapping program: every device captured as a structured record with images and metadata.",
+      "Validated before it lands: every submitted design's metadata checked against the program's reference tables; below the pass threshold, the package returned to the designer with each error listed.",
+      "Visible by designer and firm: error rates tracked per designer and per firm, turning vendor accountability into a number.",
       "Drove the data backbone: worked with the technology organization to deliver security device data into BigQuery, surfacing in Power BI, the company's first enterprise data backbone for physical security devices.",
     ],
     scale: [
-      { value: "450,000+", label: "Device records captured a year, with images and metadata" },
       { value: "12", label: "Reference tables validated against" },
-      { value: "80%", label: "Pass threshold to advance to vendor submission" },
-      { value: "24", label: "Active designers tracked by error rate" },
-    ],
-    result: [
-      "450,000+ structured device records captured a year, each with images and metadata.",
-      "First enterprise data backbone for physical security devices, BigQuery to Power BI.",
-      "Vendor quality became a number, not an opinion.",
+      { value: "80%", label: "Pass threshold to advance" },
+      { value: "24", label: "Designers tracked by error rate" },
     ],
     takeaway: "Visibility first. Intelligence second. There's no shortcut through the first one.",
     detail: [

@@ -2,7 +2,6 @@ import type { CSSProperties } from "react"
 import { Rich } from "../lib/rich"
 import {
   aboutSection,
-  aiReady,
   capabilities,
   contact,
   experience,
@@ -15,7 +14,7 @@ import {
   thesis,
 } from "../content/site"
 import { Flow, SectionHead } from "./ui"
-import { DownloadIcon } from "./icons"
+import { DownloadIcon, ExternalIcon, MailIcon } from "./icons"
 
 type Vars = CSSProperties & Record<`--${string}`, string | number>
 
@@ -37,7 +36,7 @@ export function Metrics() {
           ))}
         </ul>
 
-        <ul className="mt-10 grid grid-cols-1 gap-x-10 gap-y-8 border-t border-line pt-10 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-10 grid grid-cols-1 gap-x-10 gap-y-8 border-t border-line pt-10 sm:grid-cols-3">
           {metricsSecondary.map((m) => (
             <li key={m.label} style={{ "--rest": 0.15 } as Vars}>
               <span className="t-stat block" data-count={m.value} aria-hidden="true">
@@ -76,25 +75,11 @@ export function Thesis() {
                 </li>
               ))}
             </ol>
-            <div className="mt-12 max-w-2xl" data-reveal>
-              {thesis.body.map((p) => (
-                <p key={p} className="t-body">
-                  {p}
-                </p>
-              ))}
-            </div>
-            <div className="mt-12" data-reveal>
-              <p className="t-meta">{thesis.dependsLabel}</p>
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {thesis.depends.map((d) => (
-                  <li key={d} className="tag">
-                    {d}
-                  </li>
-                ))}
-              </ul>
+            <div className="mt-16" data-reveal>
+              <Flow steps={thesis.chain} label="From the physical world to AI" />
             </div>
             <p className="mt-12 max-w-3xl text-[1.15rem] leading-relaxed text-ink lg:text-[1.25rem]" data-reveal>
-              {thesis.position}
+              {thesis.close}
             </p>
           </div>
         </div>
@@ -122,26 +107,26 @@ export function Method() {
               <p className="t-body mt-1.5 text-[0.95rem] leading-relaxed">
                 <Rich text={s.proof} />
               </p>
+              {s.link && (
+                <a href={s.link.href} className="lnk mt-2 block font-mono text-[0.72rem] tracking-[0.08em] uppercase">
+                  {s.link.label} →
+                </a>
+              )}
             </li>
           ))}
         </ol>
-      </div>
-    </section>
-  )
-}
-
-export function AIReady() {
-  return (
-    <section className="sec" id="ai-ready" aria-labelledby="ai-title">
-      <div className="wrap">
-        <SectionHead id="ai-title" label={aiReady.label} title={aiReady.title} />
-        <div className="mt-14" data-reveal>
-          <Flow steps={aiReady.chain} label="From the physical world to AI" />
-        </div>
-        <div className="mt-14 grid lg:grid-cols-12 lg:gap-10">
-          <p className="lg:col-span-9 lg:col-start-4 max-w-3xl text-[1.15rem] leading-relaxed text-ink lg:text-[1.25rem]" data-reveal>
-            {aiReady.close}
+        <div className="mt-16 border-t border-line pt-10">
+          <p className="t-meta sec-label" data-reveal>
+            Principles
           </p>
+          <div className="mt-8 grid gap-x-10 gap-y-9 lg:grid-cols-3">
+            {principles.items.map((p, i) => (
+              <div key={p} data-reveal>
+                <p className="t-meta">0{i + 1}</p>
+                <p className="mt-2 text-[1.15rem] leading-snug tracking-tight text-ink">{p}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -171,26 +156,6 @@ export function Capabilities() {
         <p className="t-caption mt-14 max-w-2xl" data-reveal>
           {capabilities.footnote}
         </p>
-      </div>
-    </section>
-  )
-}
-
-export function Principles() {
-  return (
-    <section className="sec" id="principles" aria-labelledby="principles-title">
-      <div className="wrap">
-        <SectionHead id="principles-title" label={principles.label} title={principles.title} />
-        <div className="mt-14 grid lg:grid-cols-12 lg:gap-10">
-          <ol className="lg:col-span-9 lg:col-start-4">
-            {principles.items.map((p, i) => (
-              <li key={p} className="sigline grid grid-cols-[2.5rem_1fr] border-t border-line py-7" data-reveal>
-                <span className="t-meta pt-2">0{i + 1}</span>
-                <p className="text-[1.3rem] leading-snug font-normal tracking-tight text-ink lg:text-[1.6rem]">{p}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
       </div>
     </section>
   )
@@ -239,37 +204,6 @@ export function Experience() {
                 ))}
               </ol>
             </div>
-            <a href={person.resume} download className="btn btn-solid mt-14">
-              Download full resume
-              <DownloadIcon />
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/** The real About section: nav "About" points here, not at the hero's
- *  identity column. Adds the credentials and the one piece of personal
- *  material worth keeping, rather than repeating name/title/positioning. */
-export function About() {
-  return (
-    <section className="sec" id="about" aria-labelledby="about-title">
-      <div className="wrap">
-        <SectionHead id="about-title" label={aboutSection.label} title={aboutSection.title} />
-        <div className="mt-12 grid lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-9 lg:col-start-4">
-            <p className="t-body max-w-2xl" data-reveal>
-              {aboutSection.bio}
-            </p>
-            <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2" data-reveal>
-              {aboutSection.credentials.map((c) => (
-                <li key={c} className="t-meta">
-                  {c}
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </div>
@@ -289,23 +223,21 @@ export function Contact() {
           <br />
           <span className="text-ink-2">{contact.titleSecond}</span>
         </h2>
-        <ul className="mt-10 flex flex-wrap gap-2" data-reveal>
-          {contact.areas.map((a) => (
-            <li key={a} className="tag">
-              {a}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-12 flex flex-wrap gap-3" data-reveal>
-          <a href={`mailto:${person.email}`} className="btn btn-solid">
-            <span className="btn-dot" aria-hidden="true" />
-            Email me
+        <div className="mt-10 flex flex-wrap gap-3" data-reveal>
+          <a
+            href={`mailto:${person.email}`}
+            className="btn btn-solid"
+            aria-label={`Email ${person.email}`}
+          >
+            Email
+            <MailIcon />
           </a>
           <a href={person.linkedin} className="btn" target="_blank" rel="noopener noreferrer">
             LinkedIn
+            <ExternalIcon />
           </a>
           <a href={person.resume} download className="btn">
-            Resume
+            Download resume
             <DownloadIcon />
           </a>
         </div>
@@ -316,6 +248,14 @@ export function Contact() {
           <span className="mx-3 text-line-2">/</span>
           {person.location}
         </p>
+        <div className="mt-12 border-t border-line pt-8">
+          <p className="t-meta sec-label" data-reveal>
+            Beyond the systems
+          </p>
+          <p className="t-body mt-3 max-w-2xl text-ink-2" data-reveal>
+            {aboutSection.bio}
+          </p>
+        </div>
       </div>
     </section>
   )

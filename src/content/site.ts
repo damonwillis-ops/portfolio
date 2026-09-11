@@ -37,7 +37,7 @@ export const person = {
 }
 
 export const nav = [
-  { label: "About", href: "#about" },
+  { label: "About", href: "#identity" },
   { label: "Work", href: "#work" },
   { label: "How I Think", href: "#how-i-work" },
   { label: "Experience", href: "#experience" },
@@ -57,8 +57,6 @@ export const hero = {
 export const about = {
   name: "Damon Willis, CPP",
   title: "Security Technology & Systems Leader",
-  positioning:
-    "I build the systems that turn complex physical infrastructure into usable data, scalable operations, and intelligent systems.",
   pattern:
     "The pattern across all of it: I walk into programs that run on drawings, spreadsheets, and memory, and leave them running on data.",
 }
@@ -68,14 +66,7 @@ export const about = {
  *  the credentials and the one piece of personal/tactical material that's
  *  strategically relevant, instead of repeating name/title/positioning. */
 export const aboutSection = {
-  label: "About",
-  title: "Beyond the systems.",
   bio: "Ten years as opposing force at the Direct Action Resource Center, running force-on-force against military special operations and law enforcement tactical teams. I have personally run the attack path security designs are meant to stop.",
-  credentials: [
-    "ASIS Certified Protection Professional (CPP)",
-    "U.S. Coast Guard veteran",
-    "18 years, Fortune 1 and Fortune 500 scale",
-  ],
 }
 
 export interface Metric {
@@ -95,7 +86,6 @@ export const metricsPrimary: Metric[] = [
 export const metricsSecondary: Metric[] = [
   { value: "$800K–$1.6M", label: "Annual savings", note: "approved business case" },
   { value: "30%", label: "Faster project cycles", note: "approved business case" },
-  { value: "450K+", label: "Device records a year" },
   { value: "4,500+", label: "Locations on one system of record" },
 ]
 
@@ -111,21 +101,17 @@ export const thesis = {
     "Security systems generate operational data.",
     "Physical environments are becoming software-defined.",
   ],
-  body: [
-    "Every camera terminates on a switch port. Every door is an identity event. Every device is an asset with a lifecycle. At enterprise scale the security estate is a sensor network, and most companies still run it on drawings, spreadsheets, and memory.",
+  chain: [
+    { label: "Physical world", sub: "sites, doors, rooms" },
+    { label: "Sensors", sub: "cameras, readers, LPR" },
+    { label: "Digital records", sub: "one per device" },
+    { label: "Integrated data", sub: "system of record" },
+    { label: "Intelligence", sub: "coverage, lifecycle" },
+    { label: "Automation", sub: "gates, checks" },
+    { label: "AI", sub: "measured, not assumed" },
   ],
-  dependsLabel: "What that infrastructure now depends on",
-  depends: [
-    "Data",
-    "Automation",
-    "Connectivity",
-    "Analytics",
-    "AI",
-    "Lifecycle management",
-    "Systems integration",
-  ],
-  position:
-    "My work sits in the gap between the physical estate and the data it should be producing. I understand the systems, the network underneath them, the people who run them, the procurement and construction process that builds them, and the enterprise constraints that decide whether any of it gets adopted. That is what it takes to make AI-enabled physical infrastructure actually work.",
+  close:
+    "Most of my career has been the left side of that chain: the physical systems, the capture, the data model, the standards. It is the part AI projects in physical operations tend to underestimate. I'm not an AI researcher. I'm the person who makes the physical layer ready for one.",
 }
 
 export interface MethodStep {
@@ -133,6 +119,7 @@ export interface MethodStep {
   title: string
   what: string
   proof: string
+  link?: { label: string; href: string }
 }
 
 export const method = {
@@ -150,13 +137,15 @@ export const method = {
       num: "02",
       title: "Architect",
       what: "Map the system, people, dependencies, and technology.",
-      proof: "Asset Protection, Risk, Realty, Construction, GSOC, Investigations, Claims. One deliverable, seven owners.",
+      proof: "Seven groups with a claim on one design, none owning all of it.",
+      link: { label: "Case 01", href: "#walmart-scale" },
     },
     {
       num: "03",
       title: "Prove",
       what: "Prototype, test, and build the business case.",
-      proof: "**$200** a site, inside remodel budgets that already existed.",
+      proof: "A self-funding business case: no new budget, no new headcount.",
+      link: { label: "Case 02", href: "#cad-to-digital" },
     },
     {
       num: "04",
@@ -168,25 +157,10 @@ export const method = {
       num: "05",
       title: "Scale",
       what: "Measure the outcome and turn it into an enterprise capability.",
-      proof: "Proven in a **$60M** logistics portfolio, then scaled across **4,500+** retail sites.",
+      proof: "Proven in a logistics portfolio, then scaled to Fortune 1.",
+      link: { label: "Case 02", href: "#cad-to-digital" },
     },
   ] satisfies MethodStep[],
-}
-
-export const aiReady = {
-  label: "The bridge",
-  title: "AI starts with the infrastructure underneath it.",
-  chain: [
-    { label: "Physical world", sub: "sites, doors, rooms" },
-    { label: "Sensors", sub: "cameras, readers, LPR" },
-    { label: "Digital records", sub: "one per device" },
-    { label: "Integrated data", sub: "system of record" },
-    { label: "Intelligence", sub: "coverage, lifecycle" },
-    { label: "Automation", sub: "gates, checks" },
-    { label: "AI", sub: "measured, not assumed" },
-  ],
-  close:
-    "Most of my career has been the left side of that chain: the physical systems, the capture, the data model, the standards. It is the part AI projects in physical operations tend to underestimate. I'm not an AI researcher. I'm the person who makes the physical layer ready for one.",
 }
 
 export const capabilities = {
@@ -216,8 +190,6 @@ export const capabilities = {
 }
 
 export const principles = {
-  label: "Principles",
-  title: "What eighteen years taught me to believe.",
   items: [
     "The sensor isn't the system. The data around the sensor is.",
     "Enterprise scale changes the problem.",
@@ -242,7 +214,7 @@ export const experience = {
       title: "Senior Manager, Global Security Strategy & Innovation",
       dates: "Sep 2024 – Jul 2026",
       summary:
-        "Led the enterprise security and life safety design program: **$327M** capital authority, **1,600+** designs a year, **4,600+** locations, teams in four countries. The organization's AI adoption lead for physical security.",
+        "Led the enterprise security and life safety design program across four countries. The organization's AI adoption lead for physical security.",
       links: [
         { label: "Case 01", href: "#walmart-scale" },
         { label: "Case 02", href: "#cad-to-digital" },
@@ -261,7 +233,7 @@ export const experience = {
       title: "Senior Asset Protection Project Manager",
       dates: "Aug 2023 – Sep 2024",
       summary:
-        "Personally designed a **$60M** portfolio of **150** concurrent logistics security projects through an 8-person team with no direct authority. Took a lifecycle platform from zero to full deployment, the model later scaled enterprise-wide.",
+        "Designed a **$60M** portfolio of **150** concurrent logistics security projects through an 8-person team with no direct authority. Took a lifecycle platform from zero to full deployment, the model later scaled enterprise-wide.",
       links: [{ label: "Case 02", href: "#cad-to-digital" }],
     },
     {
@@ -293,11 +265,4 @@ export const contact = {
   label: "Contact",
   title: "Building something complicated?",
   titleSecond: "Let's talk.",
-  areas: [
-    "Security Technology",
-    "Systems Architecture",
-    "Physical Infrastructure",
-    "Digital Transformation",
-    "AI-Ready Operations",
-  ],
 }

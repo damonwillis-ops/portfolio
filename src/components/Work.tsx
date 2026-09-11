@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react"
 import { caseStudies, workIntro, type Block, type CaseStudy } from "../content/caseStudies"
 import { selectedWork, workNote, type WorkDiagram } from "../content/work"
 import { Rich } from "../lib/rich"
 import { BeforeAfter, Explore, Flow, SectionHead, StatGrid } from "./ui"
 import { AssetRecord, EvalLoop, Lineage, PackageLibrary, StandardCard, SystemMap, ValidationGate } from "./diagrams"
-import { ArrowIcon } from "./icons"
 
 function Subhead({ children }: { children: string }) {
   return <h3 className="t-meta">{children}</h3>
@@ -108,87 +108,95 @@ function BlockView({ b }: { b: Block }) {
   }
 }
 
-function CaseArticle({ cs, total }: { cs: CaseStudy; total: number }) {
+function CaseRow({ cs, isOpen, onToggle }: { cs: CaseStudy; isOpen: boolean; onToggle: () => void }) {
   return (
-    <article id={cs.id} className="sec" aria-labelledby={`${cs.id}-title`}>
-      <div className="wrap grid gap-10 lg:grid-cols-12">
-        <aside className="lg:col-span-3">
-          <div className="lg:sticky lg:top-28" data-reveal>
-            <p className="t-meta flex items-center gap-3 text-ink">
-              <span className="btn-dot" aria-hidden="true" />
-              Case study {cs.num}
-            </p>
-            <p className="t-meta mt-3">{cs.label}</p>
-            <p className="t-caption mt-6 hidden lg:block">
-              Sheet {cs.num} / 0{total}
-            </p>
-            {cs.role && <p className="t-caption mt-2 max-w-[17rem]">{cs.role}</p>}
-          </div>
-        </aside>
-        <div className="min-w-0 lg:col-span-9">
-          <h2 id={`${cs.id}-title`} className="t-h1" data-reveal>
+    <article id={cs.id} className="scroll-mt-24 border-t border-line" data-reveal>
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={`${cs.id}-panel`}
+        onClick={onToggle}
+        className="case-row-btn group grid w-full grid-cols-[1fr_1.75rem] items-start gap-x-4 gap-y-3 py-7 text-left sm:grid-cols-[4rem_1fr_auto_1.75rem] sm:items-center sm:gap-6"
+      >
+        <span className="t-meta col-span-2 flex items-center gap-2 sm:col-span-1">
+          <span className="btn-dot" aria-hidden="true" />
+          {cs.num}
+        </span>
+        <span className="min-w-0">
+          <span className="t-h2 block text-ink transition-colors duration-300 group-hover:text-white">
             {cs.title}
-          </h2>
-          <p className="t-lead mt-6 max-w-3xl" data-reveal>
-            {cs.dek}
-          </p>
+          </span>
+          <span className="mt-2 block text-[0.98rem] text-ink-2">{cs.dek}</span>
+          {/* Mobile keeps the hook: key figure under the dek (desktop shows it in its own column). */}
+          <span className="mt-4 flex items-baseline gap-3 sm:hidden" aria-hidden="true">
+            <span className="text-[1.6rem] leading-none font-light tracking-tight text-signal">{cs.key.value}</span>
+            <span className="t-caption">{cs.key.label}</span>
+          </span>
+        </span>
+        <span className="hidden text-right sm:block">
+          <span className="t-stat block whitespace-nowrap" data-count={cs.key.value} aria-hidden="true">
+            {cs.key.value}
+          </span>
+          <span className="sr-only">{cs.key.value}</span>
+          <span className="t-caption mt-1 block">{cs.key.label}</span>
+        </span>
+        <span
+          className="case-chevron flex h-7 w-7 flex-none items-center justify-center text-[1.4rem] leading-none font-light text-ink-3"
+          aria-hidden="true"
+        >
+          +
+        </span>
+      </button>
 
-          <div className="mt-14 grid gap-10 lg:grid-cols-2" data-reveal>
-            <div>
-              <p className="t-meta sec-label">The problem</p>
-              <p className="t-body mt-4 max-w-xl leading-relaxed">
-                <Rich text={cs.problem} />
-              </p>
+      <div id={`${cs.id}-panel`} className="case-panel-wrap">
+        <div className="case-panel-inner">
+          <div className="relative pb-14 pl-8 sm:pl-10">
+            <span className="case-rail absolute top-0 left-0 h-full w-px bg-signal" aria-hidden="true" />
+
+            {cs.role && <p className="t-caption">{cs.role}</p>}
+
+            <div className="mt-8 grid gap-10 lg:grid-cols-2">
+              <div>
+                <p className="t-meta sec-label">The problem</p>
+                <p className="t-body mt-4 max-w-xl leading-relaxed">
+                  <Rich text={cs.problem} />
+                </p>
+              </div>
+              <div>
+                <p className="t-meta sec-label">The system</p>
+                <ul className="mt-4 space-y-3">
+                  {cs.system.map((s) => (
+                    <li key={s} className="t-body flex gap-3 text-[0.98rem] leading-relaxed">
+                      <span className="mt-[0.6em] h-1 w-1 flex-none bg-ink-3" aria-hidden="true" />
+                      <span>
+                        <Rich text={s} />
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <div>
-              <p className="t-meta sec-label">The system</p>
-              <ul className="mt-4 space-y-3">
-                {cs.system.map((s) => (
-                  <li key={s} className="t-body flex gap-3 text-[0.98rem] leading-relaxed">
-                    <span className="mt-[0.6em] h-1 w-1 flex-none bg-ink-3" aria-hidden="true" />
-                    <span>
-                      <Rich text={s} />
-                    </span>
-                  </li>
+
+            <div className="mt-12">
+              <p className="t-meta sec-label">The numbers</p>
+              <div className="mt-6">
+                <StatGrid items={cs.scale} cols={3} tone="ink" />
+              </div>
+            </div>
+
+            <div className="mt-12 border-t border-line pt-8">
+              <p className="t-meta sec-label">Takeaway</p>
+              <p className="t-h2 mt-5 max-w-3xl text-ink">{cs.takeaway}</p>
+            </div>
+
+            {cs.detail.length > 0 && (
+              <Explore>
+                {cs.detail.map((b, i) => (
+                  <BlockView key={i} b={b} />
                 ))}
-              </ul>
-            </div>
+              </Explore>
+            )}
           </div>
-
-          <div className="mt-14">
-            <p className="t-meta sec-label" data-reveal>
-              The scale
-            </p>
-            <div className="mt-6">
-              <StatGrid items={cs.scale} cols={cs.scale.length % 3 === 0 ? 3 : 4} />
-            </div>
-          </div>
-
-          <div className="mt-14 grid lg:grid-cols-12 lg:gap-10" data-reveal>
-            <div className="lg:col-span-9">
-              <p className="t-meta sec-label">The result</p>
-              <ul className="mt-4 space-y-2.5">
-                {cs.result.map((r) => (
-                  <li key={r} className="text-[1.05rem] leading-snug text-ink">
-                    <Rich text={r} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-14 border-t border-line pt-8" data-reveal>
-            <p className="t-meta sec-label">Takeaway</p>
-            <p className="t-h2 mt-5 max-w-3xl text-ink">{cs.takeaway}</p>
-          </div>
-
-          {cs.detail.length > 0 && (
-            <Explore>
-              {cs.detail.map((b, i) => (
-                <BlockView key={i} b={b} />
-              ))}
-            </Explore>
-          )}
         </div>
       </div>
     </article>
@@ -196,40 +204,50 @@ function CaseArticle({ cs, total }: { cs: CaseStudy; total: number }) {
 }
 
 export function CaseStudies() {
+  const [openIds, setOpenIds] = useState<Set<string>>(new Set())
+
+  useEffect(() => {
+    const applyHash = () => {
+      const id = window.location.hash.slice(1)
+      if (!id || !caseStudies.some((cs) => cs.id === id)) return
+      setOpenIds((prev) => (prev.has(id) ? prev : new Set(prev).add(id)))
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ block: "start" })
+      })
+    }
+    applyHash()
+    window.addEventListener("hashchange", applyHash)
+    return () => window.removeEventListener("hashchange", applyHash)
+  }, [])
+
+  const toggle = (id: string) => {
+    setOpenIds((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        next.delete(id)
+        if (window.location.hash === `#${id}`) {
+          window.history.replaceState(null, "", window.location.pathname + window.location.search)
+        }
+      } else {
+        next.add(id)
+        window.history.replaceState(null, "", `#${id}`)
+      }
+      return next
+    })
+  }
+
   return (
     <section aria-labelledby="work-title">
       <div className="sec">
         <div className="wrap">
           <SectionHead id="work-title" label={workIntro.label} title={workIntro.title} lead={workIntro.lead} />
-          <div className="mt-14 grid lg:grid-cols-12 lg:gap-10">
-            <ol className="lg:col-span-9 lg:col-start-4">
-              {caseStudies.map((cs) => (
-                <li key={cs.id} data-reveal>
-                  <a
-                    href={`#${cs.id}`}
-                    className="sigline group grid grid-cols-[3rem_1fr_auto] items-baseline gap-4 border-t border-line py-7 sm:grid-cols-[4rem_1fr_auto]"
-                  >
-                    <span className="t-meta flex items-center gap-2">
-                      <span className="btn-dot" aria-hidden="true" />
-                      {cs.num}
-                    </span>
-                    <span>
-                      <span className="t-h2 block text-ink transition-colors group-hover:text-white">{cs.title}</span>
-                      <span className="mt-2 block text-[0.98rem] text-ink-2">{cs.dek}</span>
-                    </span>
-                    <span className="text-ink-3 transition-colors duration-300 group-hover:text-signal">
-                      <ArrowIcon />
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ol>
+          <div className="mt-14">
+            {caseStudies.map((cs) => (
+              <CaseRow key={cs.id} cs={cs} isOpen={openIds.has(cs.id)} onToggle={() => toggle(cs.id)} />
+            ))}
           </div>
         </div>
       </div>
-      {caseStudies.map((cs) => (
-        <CaseArticle key={cs.id} cs={cs} total={caseStudies.length} />
-      ))}
     </section>
   )
 }

@@ -117,14 +117,22 @@ export function BeforeAfter({
   )
 }
 
-export function StatGrid({ items, cols = 4 }: { items: Metric[]; cols?: 2 | 3 | 4 }) {
+export function StatGrid({
+  items,
+  cols = 4,
+  tone = "signal",
+}: {
+  items: Metric[]
+  cols?: 2 | 3 | 4
+  tone?: "signal" | "ink"
+}) {
   const colClass = cols === 4 ? "lg:grid-cols-4" : cols === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
   return (
     <ul className={`grid grid-cols-1 gap-x-8 gap-y-9 min-[26rem]:grid-cols-2 ${colClass}`} data-reveal>
       {items.map((s) => (
         <li key={s.label} className="sigline border-t border-line pt-5">
           <span
-            className={`t-stat block whitespace-nowrap ${s.value.length > 7 ? "text-[clamp(1.45rem,1.05rem+1.3vw,2rem)]" : ""}`}
+            className={`t-stat block whitespace-nowrap ${tone === "ink" ? "text-ink" : ""} ${s.value.length > 7 ? "text-[clamp(1.45rem,1.05rem+1.3vw,2rem)]" : ""}`}
             data-count={s.value}
             aria-hidden="true"
           >

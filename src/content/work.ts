@@ -33,8 +33,8 @@ export const selectedWork: WorkItem[] = [
     kicker: "01",
     title: "Design Validation Platform",
     sentence:
-      "A self-submission platform, built with one teammate, that checks design metadata against **12** reference tables and returns every error to the designer.",
-    proof: "24 designers active; recognized with a 2026 company innovation award.",
+      "A self-submission platform, built with one teammate, that checks design metadata against the program's reference tables and returns every error to the designer.",
+    proof: "Recognized with a 2026 company innovation award.",
     detail: [
       "**80%** pass threshold, enforced as a gate. Below it, a package could not advance to vendor submission.",
       "I wrote a rule excluding the tool's own scores from the program's performance metrics, so it could never flatter the scoreboard.",

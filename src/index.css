@@ -150,6 +150,15 @@ p { text-wrap: pretty; }
     font-variant-numeric: tabular-nums lining-nums;
   }
 
+  /* Emphasized evidence inline in neutral prose. White semibold, not amber —
+     amber is reserved for headline figures (see the amber rule at the top
+     of this file). */
+  .hl {
+    color: var(--color-ink);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
   /* ---------- links and buttons ---------- */
   .lnk {
     color: var(--color-ink);
@@ -275,6 +284,36 @@ p { text-wrap: pretty; }
     transition: transform 0.2s var(--ease-signal);
   }
   .explore[open] > .explore-summary .explore-mark { transform: rotate(45deg); }
+
+  /* ---------- case accordion ----------
+     A row's panel is always in the DOM (prerendered, crawlable) and is
+     shown/hidden purely by CSS keyed off the header button's aria-expanded,
+     using the grid-rows trick so height can transition without a fixed
+     pixel value. The signal rail is a second, independently-timed reveal:
+     a 1px amber line that grows down from the top as the panel opens. */
+  .case-panel-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s var(--ease-signal);
+  }
+  .case-row-btn[aria-expanded="true"] + .case-panel-wrap {
+    grid-template-rows: 1fr;
+  }
+  .case-panel-inner { overflow: hidden; }
+  .case-rail {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.6s var(--ease-signal);
+  }
+  .case-row-btn[aria-expanded="true"] + .case-panel-wrap .case-rail {
+    transform: scaleY(1);
+  }
+  .case-chevron {
+    transition: transform 0.3s var(--ease-signal);
+  }
+  .case-row-btn[aria-expanded="true"] .case-chevron {
+    transform: rotate(45deg);
+  }
 
   /* ---------- flow: scroll-linked signal chain ----------
      --p (0..1) is written by motion.ts as the element crosses the
@@ -605,6 +644,7 @@ p { text-wrap: pretty; }
   .flow-pulse, .sx-pulse { display: none; animation: none !important; }
   .js .sx-draw { stroke-dasharray: none; stroke-dashoffset: 0; animation: none !important; }
   .sigline::before, .m-step::before, .flow-seg::after { transition: none; }
+  .case-panel-wrap, .case-rail, .case-chevron { transition: none; }
 }
 
 @media print {
@@ -614,4 +654,6 @@ p { text-wrap: pretty; }
   /* Detail stays in the DOM when collapsed; force it visible on paper. */
   .explore-summary { display: none; }
   .explore-body { display: block !important; }
+  .case-panel-wrap { grid-template-rows: 1fr !important; }
+  .case-chevron { display: none !important; }
 }

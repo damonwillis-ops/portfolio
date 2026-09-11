@@ -43,7 +43,8 @@ export function Hero() {
           {/* Identity, not a second hero: no panel background, just a subtle
               rule tying it back to the hero's own grid. */}
           <div
-            className="lg:border-l lg:border-line lg:pl-12"
+            id="identity"
+            className="scroll-mt-28 lg:border-l lg:border-line lg:pl-12"
             data-reveal
             style={{ ["--d" as string]: "80ms" }}
           >
@@ -61,7 +62,6 @@ export function Hero() {
             </picture>
             <p className="mt-6 text-[1.15rem] font-medium tracking-tight text-ink">{about.name}</p>
             <p className="mt-1 text-[0.92rem] text-ink-2">{about.title}</p>
-            <p className="t-body mt-5 max-w-xs text-[0.95rem] leading-relaxed">{about.positioning}</p>
             <span className="mt-6 block h-px w-8 bg-signal" aria-hidden="true" />
             <p className="t-body mt-6 max-w-xs text-[0.95rem] leading-relaxed text-ink-2">{about.pattern}</p>
           </div>
